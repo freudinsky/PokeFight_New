@@ -10,3 +10,13 @@ export const getPokemonById = async (req, res) => {
   const treffer = jsonData.find((element) => element.id === searchId);
   res.json(treffer);
 };
+
+export const getPokemonInfoById = async (req, res) => {
+  const searchId = Number(req.params.id);
+  const searchInfo = req.params.info;
+  const checkArr = ["name", "type", "base"];
+  if (checkArr.includes(searchInfo)) {
+    const treffer = jsonData.find((element) => element.id === searchId);
+    res.json(treffer[searchInfo]);
+  }
+};
