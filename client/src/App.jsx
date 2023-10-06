@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <img src="src/assets/poke_fight_logo.png" alt="" />
-      <nav>
+{/*       <nav>
         <ul>
           <li>
             <Link to={"/"}>Home</Link>
@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/pokemon/:id" element={<PokeDetail />} />
         <Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
-      </Routes>
+      </Routes> */}
     </>
   );
 }
