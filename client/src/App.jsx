@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ScoreBoard from "./components/ScoreBoard";
 import "./App.css";
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
   return (
     <>
       <img src="src/assets/poke_fight_logo.png" alt="" />
+      <ScoreBoard />
 {/*       <nav>
         <ul>
           <li>
