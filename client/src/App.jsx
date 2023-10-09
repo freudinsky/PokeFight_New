@@ -21,6 +21,7 @@ function App() {
             <Link to={"/pokemon/:id"}>Pokemon Detail</Link>
             <Link to={"/pokemon/:id/:info"}>Pokemon Super Detail</Link>
             <Link to={"/game"}>Game Screen</Link>
+            
           </li>
         </ul>
       </nav>
