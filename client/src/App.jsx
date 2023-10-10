@@ -5,6 +5,8 @@ import PokeDetail from "./components/PokeDetail";
 import PokeSuperDetail from "./components/PokeSuperDetail";
 import GameScreen from "./components/GameScreen";
 import Select from "./components/Select";
+/* import ScoreBoard from "./components/ScoreBoard"; */
+
 import "./App.css";
 
 function App() {
