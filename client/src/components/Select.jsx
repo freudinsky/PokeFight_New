@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { jsonCall, pokeAPI } from "../../services/APIcall";
+import "./Select.css"
 
 function Select() {
 	const [pokemon, setPokemon] = useState([]);
@@ -48,7 +49,11 @@ function Select() {
 
 	console.log(pokemon);
 
-	return <></>;
+	return <>
+    <div className="cardcont">
+
+    </div>
+  </>;
 }
 
 export default Select;
