@@ -15,7 +15,9 @@ function App() {
 
   return (
     <>
-      <Link to={"/"}><img src="src/assets/poke_fight_logo.png" alt="" /></Link>
+      {/* <Link to={"/"}>
+        <img src="src/assets/poke_fight_logo.png" alt="" />
+      </Link> */}
       {/* <nav>
         <ul>
           <li>
@@ -31,8 +33,8 @@ function App() {
         <Route path="/pokemon/:id" element={<PokeDetail />} />
         <Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
         <Route path="/game" element={<GameScreen />} />
-        <Route path="/select" element={ <Select/> }/>
-        <Route path="/scoreboard" element={<ScoreBoard />} />
+        <Route path="/select" element={<Select />} />
+        <Route path="/highscore" element={<ScoreBoard />} />
       </Routes>
     </>
   );
