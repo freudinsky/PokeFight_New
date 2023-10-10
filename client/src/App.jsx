@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import PokeDetail from "./components/PokeDetail";
 import PokeSuperDetail from "./components/PokeSuperDetail";
 import GameScreen from "./components/GameScreen";
-import ScoreBoard from "./components/ScoreBoard";
+/* import ScoreBoard from "./components/ScoreBoard"; */
 
 import "./App.css";
 
@@ -21,7 +21,6 @@ function App() {
             <Link to={"/pokemon/:id"}>Pokemon Detail</Link>
             <Link to={"/pokemon/:id/:info"}>Pokemon Super Detail</Link>
             <Link to={"/game"}>Game Screen</Link>
-            
           </li>
         </ul>
       </nav>
