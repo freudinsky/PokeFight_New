@@ -1,11 +1,11 @@
-body {
+.GameContainerWrapper {
+  height: 100vh;
+  width: 100vw;
   background-image: url("bg.webp");
   background-size: cover;
+  background-position: center;
 }
 .GameContainer {
-  width: 100%;
-  background-position: center;
-  background-size: cover;
   display: grid;
   grid-template-rows: 50px 1fr 50px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;

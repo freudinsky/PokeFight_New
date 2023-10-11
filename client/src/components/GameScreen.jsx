@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PokeLogo from "./PokeLogo";
 import "./GameScreen.css";
 
 function GameScreen({ pokemonA1, pokemonB1 }) {
@@ -107,91 +108,94 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
 
   return (
     <>
-      <div className="GameContainer">
-        <div className="poke" id="pokeA">
-          <div className="stats">
-            <label htmlFor="hp">{pokeAhp}</label>
-            <progress id="hp" value={pokeAhp} max={pokemonA.base.HP}>
-              value
-            </progress>
+      <div className="GameContainerWrapper">
+        <PokeLogo />
+        <div className="GameContainer">
+          <div className="poke" id="pokeA">
+            <div className="stats">
+              <label htmlFor="hp">{pokeAhp}</label>
+              <progress id="hp" value={pokeAhp} max={pokemonA.base.HP}>
+                value
+              </progress>
+            </div>
+            <img src={pokeAimg} />
+            <div className="actions">
+              <button
+                id="attack"
+                onClick={() => handleAction("attack", pokemonA.base.Attack)}
+                disabled={!inFight}
+              >
+                <div>Attack</div>
+                <div>{pokemonA.base.Attack}</div>
+              </button>
+              <button
+                id="defend"
+                onClick={() => handleAction("defense", pokemonA.base.Defense)}
+                disabled={!inFight}
+              >
+                <div>Defend</div>
+                <div>{pokemonA.base.Defense}</div>
+              </button>
+              <button
+                id="sattack"
+                onClick={() =>
+                  handleAction("sattack", pokemonA.base["Sp. Attack"])
+                }
+                disabled={!inFight}
+              >
+                <div>Special Attack </div>
+                <div>{pokemonA.base["Sp. Attack"]}</div>
+              </button>
+              <button
+                id="sdefend"
+                onClick={() =>
+                  handleAction("sdefense", pokemonA.base["Sp. Defense"])
+                }
+                disabled={!inFight}
+              >
+                <div>Special Defense</div>
+                <div>{pokemonA.base["Sp. Defense"]}</div>
+              </button>
+            </div>
           </div>
-          <img src={pokeAimg} />
-          <div className="actions">
-            <button
-              id="attack"
-              onClick={() => handleAction("attack", pokemonA.base.Attack)}
-              disabled={!inFight}
-            >
-              <div>Attack</div>
-              <div>{pokemonA.base.Attack}</div>
-            </button>
-            <button
-              id="defend"
-              onClick={() => handleAction("defense", pokemonA.base.Defense)}
-              disabled={!inFight}
-            >
-              <div>Defend</div>
-              <div>{pokemonA.base.Defense}</div>
-            </button>
-            <button
-              id="sattack"
-              onClick={() =>
-                handleAction("sattack", pokemonA.base["Sp. Attack"])
-              }
-              disabled={!inFight}
-            >
-              <div>Special Attack </div>
-              <div>{pokemonA.base["Sp. Attack"]}</div>
-            </button>
-            <button
-              id="sdefend"
-              onClick={() =>
-                handleAction("sdefense", pokemonA.base["Sp. Defense"])
-              }
-              disabled={!inFight}
-            >
-              <div>Special Defense</div>
-              <div>{pokemonA.base["Sp. Defense"]}</div>
-            </button>
+          <div className="poke" id="pokeB">
+            <div className="stats">
+              <label htmlFor="hp">{pokeBhp}</label>
+              <progress id="hp" value={pokeBhp} max={pokemonB.base.HP}>
+                value
+              </progress>
+            </div>
+            <img src={pokeBimg} />
+            <div className="actions">
+              <button id="attack" disabled={true}>
+                <div>Attack</div>
+                <div>{pokemonB.base.Attack}</div>
+              </button>
+              <button id="defend" disabled={true}>
+                <div>Defend</div>
+                <div>{pokemonB.base.Defense}</div>
+              </button>
+              <button id="sattack" disabled={true}>
+                <div>Special Attack </div>
+                <div>{pokemonB.base["Sp. Attack"]}</div>
+              </button>
+              <button id="sdefend" disabled={true}>
+                <div>Special Defense</div>
+                <div>{pokemonB.base["Sp. Defense"]}</div>
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="poke" id="pokeB">
-          <div className="stats">
-            <label htmlFor="hp">{pokeBhp}</label>
-            <progress id="hp" value={pokeBhp} max={pokemonB.base.HP}>
-              value
-            </progress>
-          </div>
-          <img src={pokeBimg} />
-          <div className="actions">
-            <button id="attack" disabled={true}>
-              <div>Attack</div>
-              <div>{pokemonB.base.Attack}</div>
-            </button>
-            <button id="defend" disabled={true}>
-              <div>Defend</div>
-              <div>{pokemonB.base.Defense}</div>
-            </button>
-            <button id="sattack" disabled={true}>
-              <div>Special Attack </div>
-              <div>{pokemonB.base["Sp. Attack"]}</div>
-            </button>
-            <button id="sdefend" disabled={true}>
-              <div>Special Defense</div>
-              <div>{pokemonB.base["Sp. Defense"]}</div>
-            </button>
-          </div>
-        </div>
-        <button id="fight" onClick={setupGame}>
-          {inFight ? `Round ${round}` : "FIGHT"}
-        </button>
-        {inFight ? (
-          <button id="stopfight" onClick={stopfight}>
-            Stop Fight
+          <button id="fight" onClick={setupGame}>
+            {inFight ? `Round ${round}` : "FIGHT"}
           </button>
-        ) : (
-          ""
-        )}
+          {inFight ? (
+            <button id="stopfight" onClick={stopfight}>
+              Stop Fight
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </>
   );

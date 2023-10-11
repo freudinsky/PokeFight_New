@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import PokeDetail from "./components/PokeDetail";
 import PokeSuperDetail from "./components/PokeSuperDetail";
@@ -11,11 +10,8 @@ import Select from "./components/Select";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
-      <Link to={"/"}><img src="src/assets/poke_fight_logo.png" alt="Pokefight Logo" className="logo" /></Link>
       {/* <nav>
         <ul>
           <li>
