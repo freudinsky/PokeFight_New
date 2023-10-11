@@ -4,6 +4,7 @@ import axios from "axios";
 
 function ScoreBoard() {
   const [games, setGames] = useState([]);
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/game/leaderboard")
@@ -14,15 +15,21 @@ function ScoreBoard() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (games) {
+      document.body.style.backgroundImage = "url(stadium.webp)"; // double check my quotes
+    }
+  }, [games]);
+
   return (
     <div
-      style={{
-        backgroundImage: `url(/stadium.webp)`,
+    /* style={{
+        backgroundImage: `url(stadium.webp)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
-        height: 1200,
-        width: 1200,
-      }}
+        height: 1000,
+        width: 1000
+      }} */
     >
       <h1>POKKEee HIGHSCORE</h1>
       {games.map((item) => (
