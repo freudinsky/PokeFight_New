@@ -17,3 +17,15 @@ export const addNewGame = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllGames = async (req, res, next) => {
+  try {
+    const games = await Games.find();
+    if (!games.length) {
+      throw { message: "No games found" };
+    }
+    res.json(games);
+  } catch (error) {
+    next(error);
+  }
+};
