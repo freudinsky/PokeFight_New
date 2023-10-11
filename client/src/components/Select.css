@@ -1,0 +1,48 @@
+.SelectContainerWrapper {
+	min-height: 100vh;
+	width: 100vw;
+	background-image: url("../../public/bg.webp");
+	background-size: cover;
+	background-position: center;
+}
+a {
+	text-decoration: none;
+}
+
+.nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.selection-wrap {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+  gap: 2rem;
+  width: 80%;
+  max-width: 1280px;
+  margin: auto;
+  text-align: left;
+}
+.btn-sel{
+  place-self: center;
+}
+.card{
+  padding: 0 2rem 3rem !important;
+}
+.card-ul{
+  list-style: none;
+  margin: 0;
+}
+.card-title{
+  text-align: center;
+}
+.card p {
+  margin: 0;
+  font-weight: 700;
+}
+.ul-span{
+  font-weight: 500;
+}

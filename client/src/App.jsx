@@ -5,14 +5,18 @@ import PokeSuperDetail from "./components/PokeSuperDetail";
 import GameScreen from "./components/GameScreen";
 import ScoreBoard from "./components/ScoreBoard";
 import Select from "./components/Select";
+import "./App.css";
+import { useRef, useState } from "react";
 /* import ScoreBoard from "./components/ScoreBoard"; */
 
-import "./App.css";
+
 
 function App() {
-  return (
-    <>
-      {/* <nav>
+	const [userSelection, setUserSelection] = useState();
+
+	return (
+		<>
+			{/* <nav>
         <ul>
           <li>
             <Link to={"/"}>Home</Link>
@@ -22,16 +26,19 @@ function App() {
           </li>
         </ul>
       </nav> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/pokemon/:id" element={<PokeDetail />} />
-        <Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
-        <Route path="/game" element={<GameScreen />} />
-        <Route path="/select" element={<Select />} />
-        <Route path="/highscore" element={<ScoreBoard />} />
-      </Routes>
-    </>
-  );
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/pokemon/:id" element={<PokeDetail />} />
+				<Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
+				<Route
+					path="/game"
+					element={<GameScreen pokemonA1={userSelection} />}
+				/>
+				<Route path="/select" element={<Select selection={userSelection} setUserSelection={setUserSelection} />} />
+				<Route path="/highscore" element={<ScoreBoard />} />
+			</Routes>
+		</>
+	);
 }
 
 export default App;
