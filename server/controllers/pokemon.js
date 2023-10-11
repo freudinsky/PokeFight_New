@@ -1,4 +1,3 @@
-import jsonData from "../data/pokedex.json" assert { type: "json" };
 import Pokemon from "../models/Pokemon.js";
 
 export const getPokemon = async (req, res) => {
