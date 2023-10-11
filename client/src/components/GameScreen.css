@@ -1,5 +1,5 @@
 .GameContainerWrapper {
-  height: 100%;
+  height: 100vh;
   width: 100vw;
   background-image: url("bg.webp");
   background-size: cover;
