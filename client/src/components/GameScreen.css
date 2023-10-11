@@ -7,12 +7,15 @@ body {
   background-position: center;
   background-size: cover;
   display: grid;
-  grid-template-rows: 5px 1fr 50px;
+  grid-template-rows: 50px 1fr 50px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-.GameContainer > #pokeA,
-#pokeB {
-  color: rgb(255, 192, 231);
+#speed {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  border: 1px solid red;
+  color: rgb(236, 186, 19);
 }
 .GameContainer > .poke img {
   padding: 0;
@@ -25,6 +28,9 @@ body {
 }
 .GameContainer > .poke > .actions button {
   color: white;
+}
+.GameContainer > .poke > .actions button:hover {
+  border: 1px solid red;
 }
 .GameContainer > .poke > .actions #attack {
   background-color: rgb(192, 44, 44);
@@ -42,13 +48,22 @@ body {
   padding: 10px;
   margin-top: 5px;
   color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 25px;
 }
+.GameContainer > .poke > .actions > button {
+  margin: 3px;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .GameContainer > .poke > .stats label {
   background-color: #26751b;
   padding: 5px;
@@ -90,7 +105,15 @@ body {
 }
 .GameContainer > #fight {
   margin-top: 5px;
-  border: 3px solid purple;
+  color: white;
+  background-color: purple;
   grid-column-start: 3;
   grid-row-start: 3;
+}
+.GameContainer > #stopfight {
+  margin-top: 5px;
+  color: white;
+  background-color: rgb(222, 59, 255);
+  grid-column-start: 3;
+  grid-row-start: 4;
 }

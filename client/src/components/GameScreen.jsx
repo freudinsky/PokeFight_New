@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import "./GameScreen.css";
 
-function GameScreen() {
+function GameScreen({ pokemonA1, pokemonB1 }) {
+  const [round, setRound] = useState(1);
+  const [inFight, setInFight] = useState(false);
+  const [pokeIni, setPokeIni] = useState("");
   const [pokeAhp, setPokeAhp] = useState(0);
   const [pokeBhp, setPokeBhp] = useState(0);
   // Player
@@ -51,15 +54,50 @@ function GameScreen() {
   function setupGame() {
     // GameLoop:
     // "Fight": Start
-    //    countdown: 3, 2, 1
+    //    countdown: 3, 2, 1?
+    //    round based?
     //    check: health for win/lose condition
     //    action: attack / defend / spAttack / spDefense
+    if (!inFight) {
+      if (
+        pokemonA.base.Speed > pokemonB.base.Speed &&
+        pokemonA.base.Speed !== pokemonB.base.Speed
+      ) {
+        setPokeIni((curr) => (curr = "A"));
+      } else setPokeIni((curr) => (curr = "A"));
+      setInFight((curr) => (curr = !curr));
+    } else calculateRound();
+  }
+
+  function calculateRound() {
+    setRound((curr) => (curr += 1));
+  }
+
+  function stopfight() {
+    setInFight((curr) => (curr = !curr));
+    setRound((curr) => (curr = 1));
+    //reset pokemons
+    setPokeAhp((curr) => (curr = pokemonA.base.HP));
+    setPokeBhp((curr) => (curr = pokemonB.base.HP));
   }
 
   useEffect(() => {
     setPokeAhp((curr) => (curr = pokemonA.base.HP));
     setPokeBhp((curr) => (curr = pokemonB.base.HP));
   }, []);
+
+  function handleAction(action, value) {
+    switch (action) {
+      case "attack":
+        setPokeBhp((curr) => (curr -= value - pokemonB.base.Speed));
+        break;
+      case "defense":
+      case "sattack":
+      case "sdefense":
+      default:
+        break;
+    }
+  }
 
   return (
     <>
@@ -71,15 +109,42 @@ function GameScreen() {
               value
             </progress>
           </div>
+          {/* <div id="speed">
+            <h3>{pokemonA.base.Speed}</h3>
+          </div> */}
           <img src={pokeAimg} />
           <div className="actions">
-            <button id="attack">Attack ({pokemonA.base.Attack})</button>
-            <button id="defend">Defend ({pokemonA.base.Defense})</button>
-            <button id="sattack">
-              Special Attack ({pokemonA.base["Sp. Attack"]})
+            <button
+              id="attack"
+              onClick={() => handleAction("attack", pokemonA.base.Attack)}
+            >
+              <div>Attack</div>
+              <div>{pokemonA.base.Attack}</div>
             </button>
-            <button id="sdefend">
-              Special Defense ({pokemonA.base["Sp. Defense"]})
+            <button
+              id="defend"
+              onClick={() => handleAction("defense", pokemonA.base.Defense)}
+            >
+              <div>Defend</div>
+              <div>{pokemonA.base.Defense}</div>
+            </button>
+            <button
+              id="sattack"
+              onClick={() =>
+                handleAction("sattack", pokemonA.base["Sp. Attack"])
+              }
+            >
+              <div>Special Attack </div>
+              <div>{pokemonA.base["Sp. Attack"]}</div>
+            </button>
+            <button
+              id="sdefend"
+              onClick={() =>
+                handleAction("sdefense", pokemonA.base["Sp. Defense"])
+              }
+            >
+              <div>Special Defense</div>
+              <div>{pokemonA.base["Sp. Defense"]}</div>
             </button>
           </div>
         </div>
@@ -92,17 +157,34 @@ function GameScreen() {
           </div>
           <img src={pokeBimg} />
           <div className="actions">
-            <button id="attack">Attack ({pokemonB.base.Attack})</button>
-            <button id="defend">Defend ({pokemonB.base.Defense})</button>
+            <button id="attack">
+              <div>Attack</div>
+              <div>{pokemonB.base.Attack}</div>
+            </button>
+            <button id="defend">
+              <div>Defend</div>
+              <div>{pokemonB.base.Defense}</div>
+            </button>
             <button id="sattack">
-              Special Attack ({pokemonB.base["Sp. Attack"]})
+              <div>Special Attack </div>
+              <div>{pokemonB.base["Sp. Attack"]}</div>
             </button>
             <button id="sdefend">
-              Special Defense ({pokemonB.base["Sp. Defense"]})
+              <div>Special Defense</div>
+              <div>{pokemonB.base["Sp. Defense"]}</div>
             </button>
           </div>
         </div>
-        <button id="fight">FIGHT</button>
+        <button id="fight" onClick={setupGame}>
+          {inFight ? `Round ${round}` : "FIGHT"}
+        </button>
+        {inFight ? (
+          <button id="stopfight" onClick={stopfight}>
+            Stop Fight
+          </button>
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
