@@ -30,7 +30,11 @@ a {
   place-self: center;
 }
 .card{
-  padding: 0 2rem 3rem !important;
+  padding: 1rem 2rem 3rem !important;
+  background-image: url(../../public/stadium.webp);
+  background-position: center;
+  background-size: cover;
+  backdrop-filter: blur(500px) !important;
 }
 .card-ul{
   list-style: none;

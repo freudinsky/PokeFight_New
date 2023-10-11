@@ -1,12 +1,12 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import GameScreen from "./components/GameScreen";
 import Home from "./components/Home";
 import PokeDetail from "./components/PokeDetail";
 import PokeSuperDetail from "./components/PokeSuperDetail";
-import GameScreen from "./components/GameScreen";
 import ScoreBoard from "./components/ScoreBoard";
 import Select from "./components/Select";
-import "./App.css";
-import { useRef, useState } from "react";
 /* import ScoreBoard from "./components/ScoreBoard"; */
 
 
