@@ -22,11 +22,11 @@ function PokeCard({ pokemon, sel, setSel }) {
 				<p>{pokemon.type.length > 1 ? "Types:" : "Type:"}</p>
 				<ul className="card-ul">
 					{pokemon.type.map((e) => (
-						<li key={e.num}>{e}</li>
+						<li key={crypto.randomUUID()}> {<img className="typeIcon" src={`../../public/typeIcons/${e}.svg`}/>} {e}</li>
 					))}
 				</ul>
 				<p>Stats:</p>
-				<ul className="card-ul">
+				<ul className="card-ul stats">
 					<li>
 						<span className="ul-span">HP: </span>
 						{pokemon.base.hp}

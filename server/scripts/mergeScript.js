@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 
 
 await mongoose
-	.connect(process.env.MONGO_URI)
+	.connect("...")
 	.then(() => {
 		console.log("Connected to MongoDB");
 	})
@@ -54,7 +54,8 @@ const matchPokemonData = (localData, apiData) => {
 					sp_attack: pokemon.base["Sp. Attack"],
 					sp_defense: pokemon.base["Sp. Defense"],
 					speed: pokemon.base.Speed
-				}
+				},
+				picture: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemon.id}.png`,
 			};
 			matchedPokemon.push(newPokeObj);
 		} else {

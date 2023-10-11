@@ -31,22 +31,46 @@ a {
 }
 .card{
   padding: 1rem 2rem 3rem !important;
-  background-image: url(../../public/stadium.webp);
+  background-image: url(../../public/card-bg.webp);
   background-position: center;
   background-size: cover;
-  backdrop-filter: blur(500px) !important;
+  fill: aliceblue !important;
 }
 .card-ul{
   list-style: none;
   margin: 0;
+  color: #f9f9f9;
+  text-shadow: 0 0 3px black;
 }
 .card-title{
   text-align: center;
+  font-size: 1.5rem !important;
+  color: #f9f9f9 !important;
 }
 .card p {
   margin: 0;
   font-weight: 700;
+  color: #f9f9f9;
+  text-shadow: 0 0 3px black;
 }
 .ul-span{
   font-weight: 500;
+  
+}
+
+.typeIcon{
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.554));
+  margin-right: 0.5em;
+  width: 17px;
+}
+.stats{
+  padding: 0;
+  margin: 0;
+}
+.stats li {
+  padding: 5px 10px;
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
