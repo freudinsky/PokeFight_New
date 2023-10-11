@@ -1,3 +1,12 @@
+.hide {
+  visibility: hidden;
+}
+.disabled {
+  filter: grayscale(100%) opacity(0.5) drop-shadow(2px 4px 6px black);
+}
+img {
+  filter: drop-shadow(2px 4px 6px black);
+}
 .GameContainerWrapper {
   height: 100vh;
   width: 100vw;
@@ -7,15 +16,8 @@
 }
 .GameContainer {
   display: grid;
-  grid-template-rows: 0px 1fr 50px 50px;
+  grid-template-rows: 100px 190px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-}
-#speed {
-  margin: 0;
-  padding: 0;
-  background-color: white;
-  border: 1px solid red;
-  color: rgb(236, 186, 19);
 }
 .GameContainer > .poke img {
   padding: 0;
@@ -35,21 +37,20 @@
 .GameContainer > .poke > .actions #attack {
   background-color: rgb(192, 44, 44);
 }
-.GameContainer > .poke > .actions #defend {
-  background-color: rgb(65, 84, 255);
-}
 .GameContainer > .poke > .actions #sattack {
   background-color: rgb(156, 37, 235);
 }
-.GameContainer > .poke > .actions #sdefend {
-  background-color: rgb(255, 119, 7);
+.GameContainer > .poke > .actions > .singlestat {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 .GameContainer > .poke > .stats {
   padding: 10px;
   margin-top: 5px;
   color: white;
   background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 25px;
+  border-radius: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
