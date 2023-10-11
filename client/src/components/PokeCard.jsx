@@ -4,6 +4,7 @@ import { Card, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
+
 function PokeCard({ pokemon, sel, setSel }) {
     const nav = useNavigate() 
 
@@ -14,7 +15,7 @@ function PokeCard({ pokemon, sel, setSel }) {
     }
 
 	return (
-		<Card border="dark" style={{ width: "330px", backgroundColor: "#68d4c9" }}>
+		<Card border="dark" style={{ width: "400px", backgroundColor: "#68d4c9" }}>
 			<Card.Img variant="top" src={pokemon.picture} />
 			<Card.Body>
 				<Card.Title>{pokemon.name}</Card.Title>
