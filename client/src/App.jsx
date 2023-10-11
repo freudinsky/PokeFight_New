@@ -12,13 +12,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <Link to={"/"}>
-        <img
-          src="src/assets/poke_fight_logo.png"
-          alt="Pokefight Logo"
-          className="logo"
-        />
-      </Link>
+  
       {/* <nav>
         <ul>
           <li>
