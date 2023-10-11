@@ -68,9 +68,29 @@ a {
   margin: 0;
 }
 .stats li {
-  padding: 5px 10px;
+  padding: 2px 15px;
+  margin: 5px auto;
   width: 90%;
-  margin: auto;
   display: flex;
   justify-content: space-between;
+  border: solid 1px rgba(0, 0, 0, 0.349);
+  border-radius: 50px;
+}
+.hp{
+  background-color: rgb(2, 122, 2);
+}
+.atk{
+  background-color: rgb(156, 21, 21);
+}
+.def{
+  background-color: rgb(29, 29, 121);
+}
+.satk{
+  background-color: rgb(219, 162, 56);
+}
+.sdef {
+  background-color: rgb(86, 193, 182);
+}
+.spd{
+  background-color: rgb(67, 167, 206);
 }

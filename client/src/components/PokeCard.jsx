@@ -22,32 +22,41 @@ function PokeCard({ pokemon, sel, setSel }) {
 				<p>{pokemon.type.length > 1 ? "Types:" : "Type:"}</p>
 				<ul className="card-ul">
 					{pokemon.type.map((e) => (
-						<li key={crypto.randomUUID()}> {<img className="typeIcon" src={`../../public/typeIcons/${e}.svg`}/>} {e}</li>
+						<li key={crypto.randomUUID()}>
+							{" "}
+							{
+								<img
+									className="typeIcon"
+									src={`../../public/typeIcons/${e}.svg`}
+								/>
+							}{" "}
+							{e}
+						</li>
 					))}
 				</ul>
 				<p>Stats:</p>
 				<ul className="card-ul stats">
-					<li>
+					<li className="hp">
 						<span className="ul-span">HP: </span>
 						{pokemon.base.hp}
 					</li>
-					<li>
+					<li className="atk">
 						<span className="ul-span">ATK: </span>
 						{pokemon.base.attack}
 					</li>
-					<li>
+					<li className="def">
 						<span className="ul-span">DEF: </span>
 						{pokemon.base.defense}
 					</li>
-					<li>
+					<li className="satk">
 						<span className="ul-span">Sp. ATK: </span>
 						{pokemon.base.sp_attack}
 					</li>
-					<li>
+					<li className="sdef">
 						<span className="ul-span">Sp. DEF: </span>
 						{pokemon.base.sp_defense}
 					</li>
-					<li>
+					<li className="spd">
 						<span className="ul-span">Speed: </span>
 						{pokemon.base.speed}
 					</li>
