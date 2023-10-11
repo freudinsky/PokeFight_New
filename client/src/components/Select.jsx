@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { jsonCall, pokeAPI } from "../../services/APIcall";
-import "./Select.css"
+import "./Select.module.css";
 
 function Select() {
 	const [pokemon, setPokemon] = useState([]);
@@ -17,43 +16,18 @@ function Select() {
 	console.log(randomNr());
 
 	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			try {
-				const response = await jsonCall();
-				const randomPokemonIds = randomNr();
-				const pokemonData = randomPokemonIds.map(async (id) => {
-					const pokemonDetails = response.find((res) => res.id === id);
-					if (pokemonDetails) {
-						const pokeApiResponse = await pokeAPI(
-							pokemonDetails.name.english.toLowerCase()
-						);
-						pokemonDetails.picture =
-							pokeApiResponse.sprites.other.home.front_default;
-						return pokemonDetails;
-					}
-					return null;
-				});
-
-				const pokeData = await Promise.all(pokemonData);
-				setPokemon(pokeData.filter((p) => p !== null));
-			} catch (error) {
-				console.log("Error:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchData();
+		
 	}, []);
 
 	console.log(pokemon);
 
-	return <>
-    <div className="cardcont">
-
-    </div>
-  </>;
+	return (
+		<>
+			<div className="select-body">
+				<div className="cardcont"></div>
+			</div>
+		</>
+	);
 }
 
 export default Select;
