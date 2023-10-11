@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import "./Select.css"
+
 function Home() {
 	return (
 		<>
