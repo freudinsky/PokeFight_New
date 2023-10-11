@@ -25,10 +25,16 @@ function ScoreBoard() {
   return (
     <div className="ScoreBoardWrapper">
       <PokeLogo />
-      <h1>POKKEee HIGHSCORE</h1>
+      <h1>HIGHSCORE</h1>
       {games.map((item, index) => (
         <div className="ScoreContainer" key={index}>
-          <h2>{`Winner: ${item.winner}, Turns: ${item.turns}, Date: ${item.date}`}</h2>
+          <h2>
+            Fight: {item.player1} against {item.player2}
+          </h2>
+          <h2>Winner: {item.winner}</h2>
+          <h2>Turns: {item.turns}</h2>
+          <h4>Fight Date: {item.date}</h4>
+          {/* <h2>{`Turns: ${item.turns}, Winner: ${item.winner}, Date: ${item.date}`}</h2> */}
         </div>
       ))}
     </div>
