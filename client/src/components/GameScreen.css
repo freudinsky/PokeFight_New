@@ -30,7 +30,7 @@ body {
   color: white;
 }
 .GameContainer > .poke > .actions button:hover {
-  border: 1px solid red;
+  border: 1px solid darkgrey;
 }
 .GameContainer > .poke > .actions #attack {
   background-color: rgb(192, 44, 44);

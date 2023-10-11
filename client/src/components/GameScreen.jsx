@@ -76,7 +76,6 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
   function stopfight() {
     setInFight((curr) => (curr = !curr));
     setRound((curr) => (curr = 1));
-    //reset pokemons
     setPokeAhp((curr) => (curr = pokemonA.base.HP));
     setPokeBhp((curr) => (curr = pokemonB.base.HP));
   }
@@ -87,9 +86,16 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
   }, []);
 
   function handleAction(action, value) {
+    let relDamage = value - pokemonB.base.Defense;
+    if (pokeBhp - relDamage <= 0) {
+      setPokeBhp((curr) => (curr = 0));
+      //setWinner("player");
+      stopfight();
+      return setInFight(false);
+    }
     switch (action) {
       case "attack":
-        setPokeBhp((curr) => (curr -= value - pokemonB.base.Speed));
+        setPokeBhp((curr) => (curr -= relDamage));
         break;
       case "defense":
       case "sattack":
@@ -109,14 +115,12 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
               value
             </progress>
           </div>
-          {/* <div id="speed">
-            <h3>{pokemonA.base.Speed}</h3>
-          </div> */}
           <img src={pokeAimg} />
           <div className="actions">
             <button
               id="attack"
               onClick={() => handleAction("attack", pokemonA.base.Attack)}
+              disabled={!inFight}
             >
               <div>Attack</div>
               <div>{pokemonA.base.Attack}</div>
@@ -124,6 +128,7 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
             <button
               id="defend"
               onClick={() => handleAction("defense", pokemonA.base.Defense)}
+              disabled={!inFight}
             >
               <div>Defend</div>
               <div>{pokemonA.base.Defense}</div>
@@ -133,6 +138,7 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
               onClick={() =>
                 handleAction("sattack", pokemonA.base["Sp. Attack"])
               }
+              disabled={!inFight}
             >
               <div>Special Attack </div>
               <div>{pokemonA.base["Sp. Attack"]}</div>
@@ -142,6 +148,7 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
               onClick={() =>
                 handleAction("sdefense", pokemonA.base["Sp. Defense"])
               }
+              disabled={!inFight}
             >
               <div>Special Defense</div>
               <div>{pokemonA.base["Sp. Defense"]}</div>
@@ -157,19 +164,19 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
           </div>
           <img src={pokeBimg} />
           <div className="actions">
-            <button id="attack">
+            <button id="attack" disabled={true}>
               <div>Attack</div>
               <div>{pokemonB.base.Attack}</div>
             </button>
-            <button id="defend">
+            <button id="defend" disabled={true}>
               <div>Defend</div>
               <div>{pokemonB.base.Defense}</div>
             </button>
-            <button id="sattack">
+            <button id="sattack" disabled={true}>
               <div>Special Attack </div>
               <div>{pokemonB.base["Sp. Attack"]}</div>
             </button>
-            <button id="sdefend">
+            <button id="sdefend" disabled={true}>
               <div>Special Defense</div>
               <div>{pokemonB.base["Sp. Defense"]}</div>
             </button>
