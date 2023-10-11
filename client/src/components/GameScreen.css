@@ -2,9 +2,7 @@ body {
   background-image: url("bg.webp");
   background-size: cover;
 }
-
 .GameContainer {
-  /* background-image: url("bg.webp"); */
   width: 100%;
   background-position: center;
   background-size: cover;
@@ -12,32 +10,84 @@ body {
   grid-template-rows: 5px 1fr 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-
 .GameContainer > #pokeA,
 #pokeB {
-  width: 320px;
-  height: 320px;
+  color: rgb(255, 192, 231);
 }
-
 .GameContainer > .poke img {
   padding: 0;
   margin: 0;
-  width: 100%;
+  width: 320px;
 }
-
+.GameContainer > .poke > .actions {
+  display: grid;
+  gap: 3px;
+}
+.GameContainer > .poke > .actions button {
+  color: white;
+}
+.GameContainer > .poke > .actions #attack {
+  background-color: rgb(192, 44, 44);
+}
+.GameContainer > .poke > .actions #defend {
+  background-color: rgb(65, 84, 255);
+}
+.GameContainer > .poke > .actions #sattack {
+  background-color: rgb(156, 37, 235);
+}
+.GameContainer > .poke > .actions #sdefend {
+  background-color: rgb(255, 119, 7);
+}
+.GameContainer > .poke > .stats {
+  padding: 10px;
+  margin-top: 5px;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+}
+.GameContainer > .poke > .stats label {
+  background-color: #26751b;
+  padding: 5px;
+  border: 1px solid white;
+  border-radius: 100vh;
+}
+.GameContainer > .poke > .stats progress {
+  /*reset to default appearance*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 20px;
+}
+.GameContainer > .poke > .stats progress[value] {
+  color: white;
+  font-size: 20px;
+}
+.GameContainer > .poke > .stats progress::-webkit-progress-bar {
+  background: rgb(132, 165, 132);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
+  border-radius: 20px;
+}
+/*style for progress track*/
+.GameContainer > .poke > .stats progress::-webkit-progress-value {
+  background-image: linear-gradient(120deg, #ffd173 0, #18cc00 55%);
+  border-radius: 20px;
+}
 .GameContainer > #pokeA {
-  border: 3px solid red;
-
   grid-column-start: 2;
   grid-row-start: 2;
 }
-
+.GameContainer > #pokeA img {
+  transform: scaleX(-1);
+}
 .GameContainer > #pokeB {
-  border: 3px solid yellow;
   grid-column-start: 4;
   grid-row-start: 2;
 }
-
 .GameContainer > #fight {
   margin-top: 5px;
   border: 3px solid purple;
