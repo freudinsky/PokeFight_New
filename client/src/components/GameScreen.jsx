@@ -8,6 +8,7 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
   const [pokeIni, setPokeIni] = useState("");
   const [pokeAhp, setPokeAhp] = useState(0);
   const [pokeBhp, setPokeBhp] = useState(0);
+
   // Player
   const [pokemonA, setPokemonA] = useState({
     id: 31,
@@ -90,7 +91,15 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
     let relDamage = value - pokemonB.base.Defense;
     if (pokeBhp - relDamage <= 0) {
       setPokeBhp((curr) => (curr = 0));
-      //setWinner("player");
+      //
+      // api/game/save
+      //
+      // result = "wer hats erfunden?"
+      // winner = gewinner ?.name
+      // player1 = pokemonA.id
+      // player2 = pokemonB.id
+      // turns = round
+
       stopfight();
       return setInFight(false);
     }
@@ -104,6 +113,18 @@ function GameScreen({ pokemonA1, pokemonB1 }) {
       default:
         break;
     }
+  }
+
+  function setWinner(winnerData) {
+    //result, winner, player1, player2, turns, (img_Url, date)
+    axios
+      .get("http://localhost:8000/game/save", winnerData)
+      .then((res) => {
+        // setGames(res.data);
+        //show winnerscreen (Link to select and leaderboard)
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
