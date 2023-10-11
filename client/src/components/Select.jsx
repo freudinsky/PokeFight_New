@@ -50,7 +50,9 @@ function Select({ selection, setUserSelection }) {
 		<>
 			<div className="SelectContainerWrapper">
 				<PokeLogo />
+
 				<div className="selection-wrap">
+					<h2 className="sel-header">Choose your Pokemon!</h2>
 					<Carousel activeIndex={index} onSelect={handleSelect} interval={null}>
 						{isLoading ? (
 							<ColorRing

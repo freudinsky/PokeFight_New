@@ -32,7 +32,7 @@
 	justify-content: center;
 }
 .logo a:hover img {
-filter: drop-shadow(0px 0px 20px rgb(27, 134, 206));
+	filter: drop-shadow(0px 0px 20px rgb(27, 134, 206));
 }
 .nav a:hover {
 	color: #f9f9f9;
@@ -50,7 +50,8 @@ filter: drop-shadow(0px 0px 20px rgb(27, 134, 206));
 .selection-wrap {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	align-items: center;
+	flex-direction: column;
 	gap: 2rem;
 	width: 100%;
 	max-width: 1280px;
@@ -76,12 +77,12 @@ filter: drop-shadow(0px 0px 20px rgb(27, 134, 206));
 	text-align: center;
 	font-size: 1.5rem !important;
 	color: #f9f9f9 !important;
-  text-shadow: 0 0 3px black;
+	text-shadow: 0 0 3px black;
 }
-.card-img-top{
-  max-width: 75%;
-  margin: auto;
-  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.76));
+.card-img-top {
+	max-width: 75%;
+	margin: auto;
+	filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.76));
 }
 .card p {
 	margin: 0;
@@ -131,13 +132,29 @@ filter: drop-shadow(0px 0px 20px rgb(27, 134, 206));
 }
 .carousel {
 	width: 45% !important;
-	min-height: 750px;
-	margin: 0.5rem 0 2rem;
+	min-height: 800px;
+	margin: 0.5rem 0 0;
 }
 .card {
 	margin: auto;
 }
 .carousel-indicators {
-	max-width: 290px !important;
-	margin: auto;
+	position: relative !important;
+	max-width: 350px !important;
+	margin: 0 auto;
+	justify-content: space-around;
+}
+.carousel-indicators [data-bs-target] {
+	background-color: #f9f9f9;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin-bottom: 1rem;
+	border-top: none;
+	border-bottom: none;
+}
+.sel-header {
+	color: #f9f9f9;
+	font-weight: 700;
+	text-shadow: 0 0 5px black;
 }
