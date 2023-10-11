@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import "./ScoreBoard.css";
 import axios from "axios";
+import PokeLogo from "./PokeLogo";
 
 function ScoreBoard() {
   const [games, setGames] = useState([]);
@@ -15,25 +16,20 @@ function ScoreBoard() {
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (games) {
       document.body.style.backgroundImage = "url(stadium.webp)"; // double check my quotes
     }
-  }, [games]);
+  }, [games]); */
 
   return (
-    <div
-    /* style={{
-        backgroundImage: `url(stadium.webp)`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        height: 1000,
-        width: 1000
-      }} */
-    >
+    <div className="ScoreBoardWrapper">
+      <PokeLogo />
       <h1>POKKEee HIGHSCORE</h1>
-      {games.map((item) => (
-        <h2>{`Winner: ${item.winner}, Turns: ${item.turns}, Date: ${item.date}`}</h2>
+      {games.map((item, index) => (
+        <div className="ScoreContainer" key={index}>
+          <h2>{`Winner: ${item.winner}, Turns: ${item.turns}, Date: ${item.date}`}</h2>
+        </div>
       ))}
     </div>
   );

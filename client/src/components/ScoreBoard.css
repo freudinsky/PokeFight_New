@@ -1,4 +1,11 @@
-/* .highscore_div {
-    min-height: 100vh;
-    background-color: black;
-} */
+.ScoreBoardWrapper {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("stadium.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.ScoreContainer {
+  background-color: black;
+}
