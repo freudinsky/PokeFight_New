@@ -1,13 +1,13 @@
 .GameContainerWrapper {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-image: url("bg.webp");
   background-size: cover;
   background-position: center;
 }
 .GameContainer {
   display: grid;
-  grid-template-rows: 50px 1fr 50px 50px;
+  grid-template-rows: 0px 1fr 50px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 #speed {
