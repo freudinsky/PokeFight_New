@@ -1,12 +1,15 @@
 import { React, useEffect, useState } from "react";
+import { format } from "date-fns";
 import "./ScoreBoard.css";
 import axios from "axios";
+import PokeLogo from "./PokeLogo";
 
 function ScoreBoard() {
   const [games, setGames] = useState([]);
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/game/leaderboard")
+      .get(`${import.meta.env.VITE_API_URL}/game/leaderboard`)
       .then((res) => {
         setGames(res.data);
         console.log(res.data);
@@ -15,19 +18,31 @@ function ScoreBoard() {
   }, []);
 
   return (
-    <div
-      style={{
-        backgroundImage: `url(/stadium.webp)`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        height: 1200,
-        width: 1200,
-      }}
-    >
-      <h1>POKKEee HIGHSCORE</h1>
-      {games.map((item) => (
-        <h2>{`Winner: ${item.winner}, Turns: ${item.turns}, Date: ${item.date}`}</h2>
-      ))}
+    <div className="ScoreBoardWrapper">
+      <PokeLogo />
+      <h1>HIGHSCORES</h1>
+      <div className="ScoreContainer_outer">
+        {games.map((item, index) => {
+          const formattedDate = item.date
+            ? format(new Date(item.date), "MMM dd, yyyy")
+            : "";
+          return (
+            <div className="ScoreContainer" key={index}>
+              <div className="ScoreContainer_stats">
+                <h2>
+                  Fight: {item.player1} VS {item.player2}
+                </h2>
+                <h2>Winner: {item.winner}</h2>
+                <h2>Turns: {item.turns}</h2>
+                <h2>Fight Date: {formattedDate}</h2>
+              </div>
+              <div className="ScoreContainer_img">
+                <img src={item.img_Url} alt={item.winner}></img>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
