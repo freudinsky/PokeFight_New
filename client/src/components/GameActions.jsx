@@ -1,7 +1,7 @@
 function GameActions({ inFight, pokemon, handleAction, pokeIni }) {
   return (
     <div className={pokeIni.current === "A" ? "actions" : "actions hide"}>
-      <div className="singlestat">
+      <div className="singlestat name">
         <h3>{pokemon.name}</h3>
       </div>
       <button

@@ -32,12 +32,10 @@ function GameScreen({ pokemonA, pokemonB }) {
         setTimeout(() => {
           handleAction("attack", pokemonB.base.attack, true);
         }, 2000);
-        console.log("CPU uses AutoAttack");
       } else {
         setTimeout(() => {
           handleAction("attack", pokemonB.base.sp_attack, true);
         }, 2000);
-        console.log("CPU uses special attack");
       }
     }
     setRound((curr) => (curr += 1));
@@ -76,7 +74,6 @@ function GameScreen({ pokemonA, pokemonB }) {
       .then((res) => {
         // setGames(res.data);
         //show winnerscreen (Link to select and leaderboard)
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -84,7 +81,6 @@ function GameScreen({ pokemonA, pokemonB }) {
   function handleAction(action, cpu = false) {
     let att, satt, def, sdef, hp;
     if (cpu) {
-      console.log("cpu attacks");
       att = pokemonB.base.attack;
       satt = pokemonB.base.sp_attack;
       def = pokemonA.base.defense;
@@ -92,24 +88,26 @@ function GameScreen({ pokemonA, pokemonB }) {
       hp = pokeBhp;
     }
     if (!cpu) {
-      console.log("player attacks");
       att = pokemonA.base.attack;
       satt = pokemonA.base.sp_attack;
       def = pokemonB.base.defense;
       sdef = pokemonB.base.sp_defense;
       hp = pokeAhp;
     }
-    let relDamage = att - def; //TODO: refactor damage calculation
+    //TODO: refactor damage calculation
+    // def > att -> minus
+    // calculate based on speed?
+    let relDamage = att - def;
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
-        console.log("The winner is B");
+        //TODO: show endscreen and post results
         stopfight();
         return setInFight(false);
       }
       if (!cpu) {
         setPokeBhp((curr) => (curr = 0));
-        console.log("The winner is A");
+        //TODO: show endscreen and post results
         stopfight();
         return setInFight(false);
       }
@@ -181,7 +179,7 @@ function GameScreen({ pokemonA, pokemonB }) {
             {inFight && (
               <>
                 <div className="actions">
-                  <div className="singlestat">
+                  <div className="singlestat name">
                     <h3>{pokemonB.name}</h3>
                   </div>
                   <div className="singlestat">
@@ -193,24 +191,30 @@ function GameScreen({ pokemonA, pokemonB }) {
                     <div>{pokemonB.base.sp_attack}</div>
                   </div>
                   <div className="singlestat">
-                    <div>Defend {pokemonB.base.defense}</div>
+                    <div>Defend</div>
+                    <div> {pokemonB.base.defense}</div>
                   </div>
                   <div className="singlestat">
-                    <div>Special Defense {pokemonB.base.sp_defense}</div>
+                    <div>Special Defense</div>
+                    <div>{pokemonB.base.sp_defense}</div>
                   </div>
                 </div>
               </>
             )}
           </div>
-          <button id="fight" onClick={setupGame}>
-            {inFight ? `Round ${round}` : "FIGHT"}
-          </button>
           {inFight ? (
-            <button id="stopfight" onClick={stopfight}>
-              Give Up!
-            </button>
+            <>
+              <button id="fight" disabled>
+                Round {round}
+              </button>
+              <button id="stopfight" onClick={stopfight}>
+                Give Up!
+              </button>
+            </>
           ) : (
-            ""
+            <button id="fight" onClick={setupGame}>
+              FIGHT
+            </button>
           )}
         </div>
       </div>
