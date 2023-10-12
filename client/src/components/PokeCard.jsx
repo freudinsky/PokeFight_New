@@ -7,7 +7,7 @@ function PokeCard({ pokemon, sel, setSel }) {
 
   function handleBtn(e) {
     e.preventDefault();
-    setSel(pokemon.num);
+    setSel(pokemon);
     nav("/game");
   }
 
