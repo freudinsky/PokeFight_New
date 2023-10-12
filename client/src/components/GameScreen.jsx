@@ -1,70 +1,71 @@
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
+import { ProgressBar } from "react-bootstrap";
 import PokeLogo from "./PokeLogo.jsx";
-import GameActions from "./GameActions.jsx";
 import "./GameScreen.css";
-import { redirect, useNavigate } from "react-router-dom";
 
 function GameScreen({ pokemonA, pokemonB }) {
-	const [round, setRound] = useState(0);
-	const [cpuQueue, setCpuQueue] = useState([]);
-	const [inFight, setInFight] = useState(false);
-	const [pokeAhp, setPokeAhp] = useState(0);
-	const [pokeBhp, setPokeBhp] = useState(0);
-	let pokeIni = useRef("");
-  const nav = useNavigate()
+  const [round, setRound] = useState(0);
+  const [cpuQueue, setCpuQueue] = useState([]);
+  const [inFight, setInFight] = useState(false);
+  const [pokeAhp, setPokeAhp] = useState(0);
+  const [pokeBhp, setPokeBhp] = useState(0);
+  let pokeIni = useRef("");
+  const nav = useNavigate();
 
-	useEffect(() => {
-		if (!pokemonA || !pokemonB) {
-			nav("/select");
-		} else {
-			setPokeAhp((curr) => (curr = pokemonA.base.hp));
-			setPokeBhp((curr) => (curr = pokemonB.base.hp));
-		}
-	}, []);
+  useEffect(() => {
+    if (!pokemonA || !pokemonB) {
+      nav("/select");
+    } else {
+      setPokeAhp((curr) => (curr = pokemonA.base.hp));
+      setPokeBhp((curr) => (curr = pokemonB.base.hp));
+    }
+  }, []);
 
-	function setupGame() {
-		if (!inFight) {
-			if (
-				pokemonA.base.speed > pokemonB.base.speed &&
-				pokemonA.base.speed !== pokemonB.base.speed
-			) {
-				pokeIni.current = "A";
-			} else pokeIni.current = "B";
-			setInFight((curr) => (curr = !curr));
-			calculateRound();
-		} else calculateRound();
-	}
+  function setupGame() {
+    if (!inFight) {
+      if (
+        pokemonA.base.speed > pokemonB.base.speed &&
+        pokemonA.base.speed !== pokemonB.base.speed
+      ) {
+        //TODO: show ini winner, countdown?
+        pokeIni.current = "A";
+      } else pokeIni.current = "B";
+      setInFight((curr) => (curr = !curr));
+      calculateRound();
+    } else calculateRound();
+  }
 
   function calculateRound() {
     if (pokeIni.current === "B") {
       if (cpuQueue.length === 0) {
         setTimeout(() => {
-          handleAction("attack", pokemonB.base.attack, true);
+          handleAction("attack", true);
         }, 2000);
       } else {
         setTimeout(() => {
-          handleAction("attack", pokemonB.base.sp_attack, true);
+          handleAction("attack", true);
         }, 2000);
       }
     }
     setRound((curr) => (curr += 1));
   }
 
-	function stopfight() {
-		setInFight((curr) => (curr = !curr));
-		setRound((curr) => (curr = 1));
-		setPokeAhp((curr) => (curr = pokemonA.base.hp));
-		setPokeBhp((curr) => (curr = pokemonB.base.hp));
-	}
+  function stopfight() {
+    setInFight((curr) => (curr = !curr));
+    setRound((curr) => (curr = 0));
+    setPokeAhp((curr) => (curr = pokemonA.base.hp));
+    setPokeBhp((curr) => (curr = pokemonB.base.hp));
+  }
 
-	//
-	// api/game/save
-	//
-	// result = "wer hats erfunden?"
-	// winner = gewinner ?.name
-	// player1 = pokemonA.id
-	// player2 = pokemonB.id
-	// turns = round
+  //
+  // api/game/save
+  //
+  // result = "wer hats erfunden?"
+  // winner = gewinner ?.name
+  // player1 = pokemonA.id
+  // player2 = pokemonB.id
+  // turns = round
 
   function setWinner(winnerData) {
     axios
@@ -77,29 +78,30 @@ function GameScreen({ pokemonA, pokemonB }) {
   }
 
   function handleAction(action, cpu = false) {
+    //TODO: order of checks: check first what kind of attack
     let att, satt, def, sdef, hp;
     if (cpu) {
       att = pokemonB.base.attack;
       satt = pokemonB.base.sp_attack;
       def = pokemonA.base.defense;
       sdef = pokemonA.base.sp_defense;
-      hp = pokeBhp;
+      hp = pokeAhp;
     }
     if (!cpu) {
       att = pokemonA.base.attack;
       satt = pokemonA.base.sp_attack;
       def = pokemonB.base.defense;
       sdef = pokemonB.base.sp_defense;
-      hp = pokeAhp;
+      hp = pokeBhp;
     }
     //TODO: refactor damage calculation
     // def > att results in minus damage, modify based on speed?
-    let relDamage = att
+    let relDamage = att;
     let factor = att / def;
-    if(factor < 1){
-      relDamage = Math.floor(att * factor)
-    }else{
-      relDamage = att - def
+    if (factor < 1) {
+      relDamage = Math.floor(att * factor);
+    } else {
+      relDamage = att - def;
     }
     // relDamage = Math.abs(relDamage); // bugfix for now
     if (hp - relDamage <= 0) {
@@ -150,83 +152,136 @@ function GameScreen({ pokemonA, pokemonB }) {
 
   return (
     <>
-     {pokemonA && pokemonB ? <div className="GameContainerWrapper">
-        <PokeLogo />
-        <div className="GameContainer">
-          <div className="poke" id="pokeA">
-            <div className={inFight ? "stats" : "stats hide"}>
-              <label htmlFor="hp">{pokeAhp}</label>
-              <progress id="hp" value={pokeAhp} max={pokemonA.base.hp}>
-                value
-              </progress>
+      {pokemonA && pokemonB ? (
+        <div className="GameContainerWrapper">
+          <PokeLogo />
+          <div className="GameContainer">
+            <div className="pokeA name">
+              <h3>{pokemonA.name}</h3>
             </div>
-            <img
-              src={pokemonA.picture}
-              className={pokeIni.current === "A" ? "pokeA" : "pokeA disabled"}
-            />
+            <div className="pokeB name">
+              <h3>{pokemonB.name}</h3>
+            </div>
             {inFight && (
-              <GameActions
-                inFight={inFight}
-                pokemon={pokemonA}
-                handleAction={handleAction}
-                pokeIni={pokeIni}
-              />
+              <div
+                className={pokeIni.current === "A" ? "actions" : "actions hide"}
+              >
+                <button
+                  id="attack"
+                  onClick={() => handleAction("attack")}
+                  disabled={!inFight}
+                >
+                  Attack
+                </button>
+                <button
+                  id="sattack"
+                  onClick={() => handleAction("sattack")}
+                  disabled={!inFight}
+                >
+                  Special Attack
+                </button>
+              </div>
             )}
-          </div>
-          <div className="poke" id="pokeB">
-            <div className={inFight && inFight ? "stats" : "stats hide"}>
-              <label htmlFor="hp">{pokeBhp}</label>
-              <progress id="hp" value={pokeBhp} max={pokemonB.base.hp}>
-                value
-              </progress>
-            </div>
-            <img
-              src={pokemonB.picture}
-              className={pokeIni.current === "B" ? "pokeB " : "pokeB disabled"}
-            />
-            {inFight && (
-              <>
-                <div className="actions">
-                  <div className="singlestat name">
-                    <h3>{pokemonB.name}</h3>
+            <div className="poke" id="pokeA">
+              <div className={inFight ? "stats" : "stats hide"}>
+                <ProgressBar
+                  variant="success"
+                  now={pokeAhp}
+                  max={pokemonA.base.hp}
+                  label={`${pokeAhp}`}
+                  className="hpbar"
+                />
+              </div>
+              <img
+                src={pokemonA.picture}
+                className={pokeIni.current === "A" ? "pokeA" : "pokeA disabled"}
+              />
+              {inFight && (
+                <div className="stats">
+                  <div className="singlestat">
+                    <div>Health</div>
+                    <div>{pokemonA.base.hp}</div>
                   </div>
                   <div className="singlestat">
                     <div>Attack</div>
-                    <div>{pokemonB.base.attack}</div>
+                    <div>{pokemonA.base.attack}</div>
                   </div>
                   <div className="singlestat">
                     <div>Special Attack </div>
-                    <div>{pokemonB.base.sp_attack}</div>
+                    <div>{pokemonA.base.sp_attack}</div>
                   </div>
-                  <div className="singlestat">
-                    <div>Defend</div>
-                    <div> {pokemonB.base.defense}</div>
+                  <div className="singlestat" id="defend">
+                    <div>Defense</div>
+                    <div>{pokemonA.base.defense}</div>
                   </div>
-                  <div className="singlestat">
+                  <div className="singlestat" id="sdefend">
                     <div>Special Defense</div>
-                    <div>{pokemonB.base.sp_defense}</div>
+                    <div>{pokemonA.base.sp_defense}</div>
                   </div>
                 </div>
+              )}
+            </div>
+            <div className="poke" id="pokeB">
+              <div className={inFight && inFight ? "stats" : "stats hide"}>
+                <ProgressBar
+                  variant="success"
+                  now={pokeBhp}
+                  max={pokemonB.base.hp}
+                  label={`${pokeBhp}`}
+                  className="hpbar"
+                />
+              </div>
+              <img
+                src={pokemonB.picture}
+                className={
+                  pokeIni.current === "B" ? "pokeB " : "pokeB disabled"
+                }
+              />
+              {inFight && (
+                <>
+                  <div className="stats">
+                    <div className="singlestat">
+                      <div>Health</div>
+                      <div>{pokemonB.base.hp}</div>
+                    </div>
+                    <div className="singlestat">
+                      <div>Attack</div>
+                      <div>{pokemonB.base.attack}</div>
+                    </div>
+                    <div className="singlestat">
+                      <div>Special Attack </div>
+                      <div>{pokemonB.base.sp_attack}</div>
+                    </div>
+                    <div className="singlestat">
+                      <div>Defend</div>
+                      <div> {pokemonB.base.defense}</div>
+                    </div>
+                    <div className="singlestat">
+                      <div>Special Defense</div>
+                      <div>{pokemonB.base.sp_defense}</div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {inFight ? (
+              <>
+                <div id="rounds">Round {round}</div>
+                <button id="stopfight" onClick={stopfight}>
+                  Give Up!
+                </button>
               </>
+            ) : (
+              <button id="fight" onClick={setupGame}>
+                FIGHT
+              </button>
             )}
           </div>
-          {/* {!inFight && <div>Fight</div>} */}
-          {inFight ? (
-            <>
-              <button id="fight" disabled>
-                Round {round}
-              </button>
-              <button id="stopfight" onClick={stopfight}>
-                Give Up!
-              </button>
-            </>
-          ) : (
-            <button id="fight" onClick={setupGame}>
-              FIGHT
-            </button>
-          )}
         </div>
-      </div> : ""}
+      ) : (
+        ""
+      )}
     </>
   );
 }

@@ -16,28 +16,65 @@ img {
 }
 .GameContainer {
   display: grid;
-  grid-template-rows: 100px 190px 50px;
+  grid-template-rows: 45px 190px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.GameContainer .pokeA.name,
+.pokeB.name {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  grid-row-start: 1;
+  border-radius: 10px;
+  padding-top: 8px;
+}
+.GameContainer .pokeA {
+  grid-column-start: 2;
+}
+.GameContainer .pokeB {
+  grid-column-start: 4;
+}
+.GameContainer #rounds {
+  margin: auto;
+  padding: 12px;
+  border-radius: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  grid-row-start: 1;
+  grid-column-start: 3;
+}
+.GameContainer #attack {
+  border: 1px solid red;
+}
+.GameContainer #sattack {
+  grid-row-start: 1;
+  grid-column-start: 4;
 }
 .GameContainer > .poke img {
   padding: 0;
   margin: 0;
   width: 320px;
 }
-.GameContainer > .poke > .actions {
-  display: grid;
-  gap: 3px;
+.GameContainer > .actions {
+  grid-row-start: 3;
+  grid-column-start: 3;
+  display: flex;
+  justify-content: space-evenly;
 }
-.GameContainer > .poke > .actions button {
+.GameContainer .hpbar {
+  height: 30px;
+  font-size: 20px;
+}
+.GameContainer > .actions button {
   color: white;
 }
-.GameContainer > .poke > .actions button:hover {
+.GameContainer > .actions button:hover {
   border: 1px solid darkgrey;
 }
-.GameContainer > .poke > .actions #attack {
+.GameContainer > .actions #attack {
   background-color: rgb(192, 44, 44);
 }
-.GameContainer > .poke > .actions #sattack {
+.GameContainer > .actions #sattack {
   background-color: rgb(156, 37, 235);
 }
 .GameContainer > .poke > .actions > .singlestat {
@@ -52,9 +89,9 @@ img {
   background-color: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .GameContainer > .poke > .actions button {
   margin: 3px;
