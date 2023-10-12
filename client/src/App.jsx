@@ -12,11 +12,11 @@ import "./App.css";
 
 function App() {
   const [userSelection, setUserSelection] = useState();
-
+  const [cpuSel, setCpuSel] = useState()
+console.log(cpuSel, userSelection)
   return (
-    <>
-  
-      {/* <nav>
+		<>
+			{/* <nav>
         <ul>
           <li>
             <Link to={"/"}>Home</Link>
@@ -26,27 +26,28 @@ function App() {
           </li>
         </ul>
       </nav> */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/pokemon/:id" element={<PokeDetail />} />
-        <Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
-        <Route
-          path="/game"
-          element={<GameScreen pokemonA1={userSelection} />}
-        />
-        <Route
-          path="/select"
-          element={
-            <Select
-              selection={userSelection}
-              setUserSelection={setUserSelection}
-            />
-          }
-        />
-        <Route path="/highscore" element={<ScoreBoard />} />
-      </Routes>
-    </>
-  );
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/pokemon/:id" element={<PokeDetail />} />
+				<Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
+				<Route
+					path="/game"
+					element={<GameScreen pokemonA1={userSelection} pokemonB1={cpuSel}/>}
+				/>
+				<Route
+					path="/select"
+					element={
+						<Select
+							selection={userSelection}
+							setUserSelection={setUserSelection}
+							setCPU={setCpuSel}
+						/>
+					}
+				/>
+				<Route path="/highscore" element={<ScoreBoard />} />
+			</Routes>
+		</>
+	);
 }
 
 export default App;
