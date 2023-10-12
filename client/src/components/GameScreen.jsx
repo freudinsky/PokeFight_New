@@ -210,7 +210,7 @@ function GameScreen({ pokemonA, pokemonB }) {
               </>
             )}
           </div>
-          {!inFight && <div>Fight</div>}
+          {/* {!inFight && <div>Fight</div>} */}
           {inFight ? (
             <>
               <button id="fight" disabled>
