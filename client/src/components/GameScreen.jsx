@@ -67,10 +67,8 @@ function GameScreen({ pokemonA, pokemonB }) {
   // turns = round
 
   function setWinner(winnerData) {
-    //TODO: write winner to db
-    //result, winner, player1, player2, turns, img_Url, date
     axios
-      .post("http://localhost:8000/game/save", winnerData)
+      .post(`${import.meta.env.VITE_API_URL}/game/save`, winnerData)
       .then((res) => {
         // setGames(res.data);
         //show winnerscreen (Link to select and leaderboard)
@@ -95,19 +93,23 @@ function GameScreen({ pokemonA, pokemonB }) {
       hp = pokeAhp;
     }
     //TODO: refactor damage calculation
-    // def > att -> minus
-    // calculate based on speed?
+    // def > att results in minus damage, modify based on speed?
     let relDamage = att - def;
+    Math.abs(relDamage); // bugfix for now
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
         //TODO: show endscreen and post results
+        //result, winner, player1, player2, turns, img_Url, date
+        //setWinner();
         stopfight();
         return setInFight(false);
       }
       if (!cpu) {
         setPokeBhp((curr) => (curr = 0));
         //TODO: show endscreen and post results
+        //result, winner, player1, player2, turns, img_Url, date
+        //setWinner();
         stopfight();
         return setInFight(false);
       }
@@ -202,6 +204,7 @@ function GameScreen({ pokemonA, pokemonB }) {
               </>
             )}
           </div>
+          {!inFight && <div>Fight</div>}
           {inFight ? (
             <>
               <button id="fight" disabled>
