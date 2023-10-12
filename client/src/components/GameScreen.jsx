@@ -94,8 +94,14 @@ function GameScreen({ pokemonA, pokemonB }) {
     }
     //TODO: refactor damage calculation
     // def > att results in minus damage, modify based on speed?
-    let relDamage = att - def;
-    Math.abs(relDamage); // bugfix for now
+    let relDamage = att
+    let factor = att / def;
+    if(factor < 1){
+      relDamage = Math.floor(att * factor)
+    }else{
+      relDamage = att - def
+    }
+    // relDamage = Math.abs(relDamage); // bugfix for now
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
