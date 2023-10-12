@@ -1,15 +1,18 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import GameScreen from "./components/GameScreen";
 import Home from "./components/Home";
 import PokeDetail from "./components/PokeDetail";
 import PokeSuperDetail from "./components/PokeSuperDetail";
-import GameScreen from "./components/GameScreen";
 import ScoreBoard from "./components/ScoreBoard";
 import Select from "./components/Select";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 /* import ScoreBoard from "./components/ScoreBoard"; */
 
-import "./App.css";
-
 function App() {
+  const [userSelection, setUserSelection] = useState();
+
   return (
     <>
   
@@ -27,8 +30,19 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/pokemon/:id" element={<PokeDetail />} />
         <Route path="/pokemon/:id/:info" element={<PokeSuperDetail />} />
-        <Route path="/game" element={<GameScreen />} />
-        <Route path="/select" element={<Select />} />
+        <Route
+          path="/game"
+          element={<GameScreen pokemonA1={userSelection} />}
+        />
+        <Route
+          path="/select"
+          element={
+            <Select
+              selection={userSelection}
+              setUserSelection={setUserSelection}
+            />
+          }
+        />
         <Route path="/highscore" element={<ScoreBoard />} />
       </Routes>
     </>
