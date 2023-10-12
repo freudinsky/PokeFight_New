@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Carousel } from "react-bootstrap";
 import { ColorRing } from "react-loader-spinner";
-import PokeCard from "./PokeCard";
-import PokeLogo from "./PokeLogo";
+import PokeCard from "./PokeCard.jsx";
+import PokeLogo from "./PokeLogo.jsx";
 import "./Select.css";
 
 function Select({ selection, setUserSelection, setCPU }) {

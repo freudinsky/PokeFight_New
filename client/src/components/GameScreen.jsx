@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import PokeLogo from "./PokeLogo";
-import GameActions from "./GameActions";
+import PokeLogo from "./PokeLogo.jsx";
+import GameActions from "./GameAction.jsx";
 import "./GameScreen.css";
 import { redirect, useNavigate } from "react-router-dom";
 

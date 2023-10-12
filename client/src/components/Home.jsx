@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import PokeLogo from "./PokeLogo";
+import PokeLogo from "./PokeLogo.jsx";
 
 function Home() {
 	return (

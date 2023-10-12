@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import { format } from "date-fns";
 import "./ScoreBoard.css";
 import axios from "axios";
-import PokeLogo from "./PokeLogo";
+import PokeLogo from "./PokeLogo.jsx";
 
 function ScoreBoard() {
   const [games, setGames] = useState([]);
