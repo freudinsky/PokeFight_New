@@ -22,11 +22,8 @@
 	height: 75px;
 	border-radius: 100px;
 	color: #f9f9f9;
-	background-image: linear-gradient(
-		to bottom left in oklab,
-		oklch(55% 0.45 350) 0%,
-		oklch(100% 0.4 95) 100%
-	);
+	background-image: linear-gradient(to bottom left, #ff0094 0%, #ffec00 100%);
+	text-shadow: 0 0 3px black;
 	display: flex;
 	align-items: center;
 	justify-content: center;
