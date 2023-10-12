@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 function PokeCard({ pokemon, sel, setSel }) {
   const nav = useNavigate();
 
+  function typeIcon(type){
+    const typeIcon = new URL(
+			`../../public/icons/${type.toLowerCase()}.webp`,
+			import.meta.url
+		).href;
+    return typeIcon
+  }
+
   function handleBtn(e) {
     e.preventDefault();
     setSel(pokemon);
@@ -25,7 +33,8 @@ function PokeCard({ pokemon, sel, setSel }) {
               {
                 <img
                   className="typeIcon"
-                  src={`../public/typeIcons/${e}.svg`}
+                  src={typeIcon(e)}
+                  alt={e}
                 />
               }{" "}
               {e}

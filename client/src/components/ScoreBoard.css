@@ -1,7 +1,7 @@
 .ScoreBoardWrapper {
   min-height: 100vh;
   width: 100vw;
-  background-image: url("stadium.webp");
+  background-image: url("../../public/stadium.webp");
   background-size: cover;
   background-position: center;
 }

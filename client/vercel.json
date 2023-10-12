@@ -1,0 +1,14 @@
+{
+	"rewrites": [{ "source": "/(.*)", "destination": "/" }],
+	"headers": [
+		{
+			"source": "/(.*)\\.webp",
+			"headers": [
+				{
+					"key": "Content-Type",
+					"value": "image/webp"
+				}
+			]
+		}
+	]
+}
