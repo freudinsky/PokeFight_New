@@ -61,37 +61,42 @@ async function cpuChoice(){
 	return (
 		<>
 			<div className="SelectContainerWrapper">
-				<PokeLogo />			
+				<PokeLogo />
 				<div className="selection-wrap">
 					<h2 className="sel-header">Choose your Pokemon!</h2>
 
-					<Carousel activeIndex={index} onSelect={handleSelect} interval={null}>
-						{isLoading ? (
-							<ColorRing
-								visible={true}
-								height="150"
-								width="150"
-								ariaLabel="blocks-loading"
-								wrapperStyle={{}}
-								wrapperClass="blocks-wrapper"
-								colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-							/>
-						) : (
-							""
-						)}
-						{pokemon && pokemon.length > 1
-							? pokemon.map((e) => (
-									<Carousel.Item key={e?.num}>
-										<PokeCard
-											key={e?.num}
-											pokemon={e}
-											sel={selection}
-											setSel={setUserSelection}
-										/>
-									</Carousel.Item>
-							  ))
-							: ""}
-					</Carousel>
+					{isLoading ? 
+						<ColorRing
+							visible={true}
+							height="150"
+							width="150"
+							ariaLabel="blocks-loading"
+							wrapperStyle={{}}
+							wrapperClass="blocks-wrapper"
+							colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+						/>
+					 : 
+						pokemon && pokemon.length > 1 ? (
+						<Carousel
+							activeIndex={index}
+							onSelect={handleSelect}
+							interval={null}
+						>
+							{" "}
+							{pokemon.map((e) => (
+							<Carousel.Item key={e?.num}>
+								<PokeCard
+									key={e?.num}
+									pokemon={e}
+									sel={selection}
+									setSel={setUserSelection}
+								/>
+							</Carousel.Item>
+							) )}
+						</Carousel>
+					) : (
+						""
+					)}
 				</div>
 			</div>
 		</>
