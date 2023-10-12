@@ -6,7 +6,7 @@ import PokeCard from "./PokeCard";
 import PokeLogo from "./PokeLogo";
 import "./Select.css";
 
-function Select({ selection, setUserSelection }) {
+function Select({ selection, setUserSelection, setCPU }) {
 	const [pokemon, setPokemon] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [index, setIndex] = useState(0);
@@ -14,6 +14,17 @@ function Select({ selection, setUserSelection }) {
 	const handleSelect = (selectedIndex) => {
 		setIndex(selectedIndex);
 	};
+
+const cpuNum = Math.floor(Math.random() * 777 + 1)
+async function cpuChoice(){
+	try{
+		const res = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${cpuNum}`);
+		const fetchedCPU = res.data
+		setCPU(fetchedCPU)
+	}catch(error){
+		console.log("Brudi..Fehler! ", error)
+	}
+}
 
 	function randomNr() {
 		const randoms = [];
@@ -29,7 +40,7 @@ function Select({ selection, setUserSelection }) {
 			const pokeSelection = await Promise.all(
 				randomArr.map(async (num) => {
 					try {
-						const res = await axios.get(`http://localhost:8000/pokemon/${num}`);
+						const res = await axios.get(`${import.meta.env.VITE_API_URL}/pokemon/${num}`);
 						const fetchedPoke = await res.data;
 						return fetchedPoke;
 					} catch (e) {
@@ -45,6 +56,7 @@ function Select({ selection, setUserSelection }) {
 			setIsLoading(false);
 		}
 		fetchData();
+		cpuChoice()
 	}, []);
 	return (
 		<>
