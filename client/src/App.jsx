@@ -13,7 +13,6 @@ import "./App.css";
 function App() {
   const [userSelection, setUserSelection] = useState();
   const [cpuSel, setCpuSel] = useState();
-  console.log(cpuSel, userSelection);
   return (
     <>
       <Routes>

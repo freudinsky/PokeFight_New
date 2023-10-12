@@ -69,9 +69,10 @@ function GameScreen({ pokemonA, pokemonB }) {
   // turns = round
 
   function setWinner(winnerData) {
-    //result, winner, player1, player2, turns, (img_Url, date)
+    //TODO: write winner to db
+    //result, winner, player1, player2, turns, img_Url, date
     axios
-      .get("http://localhost:8000/game/save", winnerData)
+      .post("http://localhost:8000/game/save", winnerData)
       .then((res) => {
         // setGames(res.data);
         //show winnerscreen (Link to select and leaderboard)
@@ -98,7 +99,7 @@ function GameScreen({ pokemonA, pokemonB }) {
       sdef = pokemonB.base.sp_defense;
       hp = pokeAhp;
     }
-    let relDamage = att - def;
+    let relDamage = att - def; //TODO: refactor damage calculation
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
