@@ -1,5 +1,5 @@
 .ScoreBoardWrapper {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background-image: url("stadium.webp");
   background-size: cover;
@@ -7,24 +7,60 @@
 }
 
 .ScoreBoardWrapper h1 {
+  color: white;
   margin: 0;
 }
 
+.ScoreContainer_outer {
+  background-color: rgba(0, 51, 122, 0.584);
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 80%;
+  padding: 40px;
+}
+
 .ScoreContainer {
-  background-color: #000000d1;
+  background-color: #000000cb;
   border: solid 4px;
   border-color: rgb(255, 89, 0);
   border-radius: 15px;
-  width: 50%;
-  min-width: 500px;
   padding: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 20px;
   text-align: left;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-.ScoreBoardWrapper h2,
-h4 {
+.ScoreBoardWrapper h2 {
+  color: white;
   margin: 0px;
+}
+
+.ScoreContainer_stats {
+  max-width: 60%;
+}
+
+.ScoreContainer_img {
+  width: fit-content;
+}
+
+.ScoreContainer img {
+  height: 250px;
+}
+
+@media only screen and (max-width: 960px) {
+  .ScoreContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .ScoreContainer_stats {
+    max-width: 100%;
+    text-align: center;
+  }
 }
