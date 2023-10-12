@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Carousel } from "react-bootstrap";
 import { ColorRing } from "react-loader-spinner";
 import PokeCard from "./PokeCard";
 import PokeLogo from "./PokeLogo";
 import "./Select.css";
-import { Carousel } from "react-bootstrap";
 
 function Select({ selection, setUserSelection }) {
 	const [pokemon, setPokemon] = useState([]);
@@ -49,10 +49,10 @@ function Select({ selection, setUserSelection }) {
 	return (
 		<>
 			<div className="SelectContainerWrapper">
-				<PokeLogo />
-
+				<PokeLogo />			
 				<div className="selection-wrap">
 					<h2 className="sel-header">Choose your Pokemon!</h2>
+
 					<Carousel activeIndex={index} onSelect={handleSelect} interval={null}>
 						{isLoading ? (
 							<ColorRing
