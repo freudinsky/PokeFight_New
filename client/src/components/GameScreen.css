@@ -56,7 +56,7 @@ img {
   justify-content: center;
   align-items: center;
 }
-.GameContainer > .poke > .actions > button {
+.GameContainer > .poke > .actions button {
   margin: 3px;
   display: inline-flex;
   flex-direction: row;
@@ -64,7 +64,24 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-
+.GameContainer .singlestat {
+  margin: 3px;
+  padding: 0px 30px 2px 30px;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.GameContainer .name {
+  margin: 3px;
+  padding: 0px 30px 2px 30px;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
 .GameContainer > .poke > .stats label {
   background-color: #26751b;
   padding: 5px;
