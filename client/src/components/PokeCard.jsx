@@ -25,7 +25,7 @@ function PokeCard({ pokemon, sel, setSel }) {
               {
                 <img
                   className="typeIcon"
-                  src={`/typeIcons/${e}.svg`}
+                  src={`../public/typeIcons/${e}.svg`}
                 />
               }{" "}
               {e}
