@@ -1,16 +1,29 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
-import { ProgressBar } from "react-bootstrap";
+import { Button, ProgressBar, Modal } from "react-bootstrap";
 import PokeLogo from "./PokeLogo.jsx";
 import "./GameScreen.css";
 
 function GameScreen({ pokemonA, pokemonB }) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const handleCloseCountdown = () => {
+    setShowCountdown(false);
+    setInFight((curr) => (curr = !curr));
+    calculateRound();
+  };
+  const handleShowCountdown = () => setShowCountdown(true);
+  const [ctDown, setCtDown] = useState(3);
+  const resetCtDown = () => setCtDown(3);
   const [round, setRound] = useState(0);
   const [cpuQueue, setCpuQueue] = useState([]);
   const [inFight, setInFight] = useState(false);
   const [pokeAhp, setPokeAhp] = useState(0);
   const [pokeBhp, setPokeBhp] = useState(0);
   let pokeIni = useRef("");
+  let winner = useRef("");
   const nav = useNavigate();
 
   useEffect(() => {
@@ -28,11 +41,9 @@ function GameScreen({ pokemonA, pokemonB }) {
         pokemonA.base.speed > pokemonB.base.speed &&
         pokemonA.base.speed !== pokemonB.base.speed
       ) {
-        //TODO: show ini winner, countdown?
         pokeIni.current = "A";
       } else pokeIni.current = "B";
-      setInFight((curr) => (curr = !curr));
-      calculateRound();
+      handleShowCountdown();
     } else calculateRound();
   }
 
@@ -56,25 +67,19 @@ function GameScreen({ pokemonA, pokemonB }) {
     setRound((curr) => (curr = 0));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
+    resetCtDown();
   }
-
-  //
-  // api/game/save
-  //
-  // result = "wer hats erfunden?"
-  // winner = gewinner ?.name
-  // player1 = pokemonA.id
-  // player2 = pokemonB.id
-  // turns = round
-
-  function setWinner(winnerData) {
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/game/save`, winnerData)
-      .then((res) => {
-        // setGames(res.data);
-        //show winnerscreen (Link to select and leaderboard)
-      })
-      .catch((err) => console.log(err));
+  function saveWinner() {
+    //TODO: saveWinner
+    // axios
+    //   .post(`${import.meta.env.VITE_API_URL}/game/save`, winnerData)
+    //   .then((res) => {
+    //     // setGames(res.data);
+    //     //show winnerscreen (Link to select and leaderboard)
+    //   })
+    //   .catch((err) => console.log(err));
+    handleClose();
+    nav("/select");
   }
 
   function handleAction(action, cpu = false) {
@@ -107,18 +112,32 @@ function GameScreen({ pokemonA, pokemonB }) {
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
-        //TODO: show endscreen and post results
-        //result, winner, player1, player2, turns, img_Url, date
-        //setWinner();
+        winner.current = {
+          result: "Lost",
+          winner: pokemonB.name,
+          player1: pokemonA.name,
+          player2: pokemonB.name,
+          turns: round,
+          img_Url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonB.num}.png`,
+        };
+        handleShow();
         stopfight();
+        //saveWinner();
         return setInFight(false);
       }
       if (!cpu) {
         setPokeBhp((curr) => (curr = 0));
-        //TODO: show endscreen and post results
-        //result, winner, player1, player2, turns, img_Url, date
-        //setWinner();
+        winner.current = {
+          result: "Won",
+          winner: pokemonA.name,
+          player1: pokemonA.name,
+          player2: pokemonB.name,
+          turns: round,
+          img_Url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/${pokemonA.num}.png`,
+        };
+        handleShow();
         stopfight();
+        //saveWinner();
         return setInFight(false);
       }
     }
@@ -149,6 +168,71 @@ function GameScreen({ pokemonA, pokemonB }) {
         break;
     }
   }
+
+  const winnerModal = (
+    <>
+      <Modal
+        className="winnerModal"
+        show={show}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>{winner.current.winner} won!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>Player {winner.current.result}</div>
+          <div>
+            {winner.current.player1} vs. {winner.current.player2}
+          </div>
+          <div>Rounds: {winner.current.turns}</div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="success" onClick={saveWinner}>
+            Save Highscore
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
+
+  useEffect(() => {
+    const timeout1 = setTimeout(() => {
+      //just wait, ok?
+    }, 1000);
+    ctDown > 0 && setTimeout(() => setCtDown((curr) => (curr -= 1)), 1000);
+    const timeout2 = setTimeout(() => {
+      //just wait, ok?
+    }, 500);
+    if (ctDown === 0) {
+      handleCloseCountdown();
+      clearTimeout(timeout1);
+      return () => clearTimeout(timeout2);
+    }
+  }, [ctDown]);
+
+  const countdownModal = (
+    <>
+      <Modal
+        className="countdownModal"
+        show={showCountdown}
+        backdrop="static"
+        keyboard={false}
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>
+            <h2>The fight starts in</h2>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h3>{ctDown}</h3>
+        </Modal.Body>
+        <Modal.Footer></Modal.Footer>
+      </Modal>
+    </>
+  );
 
   return (
     <>
@@ -282,6 +366,8 @@ function GameScreen({ pokemonA, pokemonB }) {
       ) : (
         ""
       )}
+      {countdownModal}
+      {winnerModal}
     </>
   );
 }

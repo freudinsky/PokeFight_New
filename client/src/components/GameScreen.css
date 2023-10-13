@@ -172,3 +172,58 @@ img {
   grid-column-start: 3;
   grid-row-start: 4;
 }
+.winnerModal .modal-content .modal-header {
+  color: white;
+  background-color: rgb(206, 177, 14);
+}
+.winnerModal .modal-content .modal-body {
+  color: white;
+  background-color: rgb(236, 73, 23);
+}
+.winnerModal .modal-content .modal-footer {
+  color: white;
+  background-color: rgb(233, 41, 41);
+}
+.countdownModal .modal-content .modal-header .modal-title {
+  text-align: center;
+}
+.countdownModal .modal-content .modal-header {
+  text-align: center;
+  color: white;
+  background-color: rgb(206, 177, 14);
+}
+.countdownModal .modal-content .modal-body {
+  text-align: center;
+  color: white;
+  background-color: rgb(236, 73, 23);
+}
+.countdownModal .modal-content .modal-footer {
+  color: white;
+  background-color: rgb(233, 41, 41);
+}
+/* ANIMATONS */
+@keyframes pulseWarning {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    background-color: rgba(200, 0, 0, 0.7);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+@keyframes pulseOk {
+  0% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    background-color: rgba(0, 200, 0, 0.7);
+  }
+  100% {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+img.pokeA.ini {
+  animation: pulse 1s infinite ease-in-out;
+}
