@@ -13,7 +13,6 @@ function GameScreen({ pokemonA, pokemonB }) {
   const handleCloseCountdown = () => {
     setShowCountdown(false);
     setInFight((curr) => (curr = !curr));
-    calculateRound();
   };
   const handleShowCountdown = () => setShowCountdown(true);
   const [ctDown, setCtDown] = useState(3);
@@ -71,32 +70,31 @@ function GameScreen({ pokemonA, pokemonB }) {
   }
 
   function resetFight() {
+    //winner.current = "";
+    setRound((curr) => (curr = 0));
     setInFight((curr) => (curr = false));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
-    setRound((curr) => (curr = 0));
     resetCtDown();
   }
 
   function saveWinner() {
-    const sendHighscore = async (e) => {
+    const sendHighscore = async () => {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/game/save`,
-          winner
+          winner.current
         );
         if (response.status === 201) {
-          //alles ok!
         }
       } catch (error) {
         console.log("Error while saving! ", error);
       }
     };
-    console.log(winner.current);
     handleClose();
     sendHighscore();
-    setRound((curr) => (curr = 0));
-    nav("/select");
+    resetFight();
+    //nav("/select");
   }
 
   function handleAction(action, cpu = false) {
@@ -117,7 +115,7 @@ function GameScreen({ pokemonA, pokemonB }) {
       hp = pokeBhp;
     }
     //TODO: refactor damage calculation
-    // def > att results in minus damage, modify based on speed?
+    // check matchup
     let relDamage = att;
     let factor = att / def;
     if (factor < 1) {
