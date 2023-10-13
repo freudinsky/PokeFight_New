@@ -198,6 +198,7 @@ img {
   background-color: rgb(236, 73, 23);
 }
 .countdownModal .modal-content .modal-footer {
+  text-align: center;
   color: white;
   background-color: rgb(233, 41, 41);
 }

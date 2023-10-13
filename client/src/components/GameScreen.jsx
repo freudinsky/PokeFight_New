@@ -65,21 +65,25 @@ function GameScreen({ pokemonA, pokemonB }) {
 
   function stopfight() {
     setInFight((curr) => (curr = !curr));
-    setRound((curr) => (curr = 0));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
     resetCtDown();
   }
+
+  function resetFight() {
+    setInFight((curr) => (curr = false));
+    setPokeAhp((curr) => (curr = pokemonA.base.hp));
+    setPokeBhp((curr) => (curr = pokemonB.base.hp));
+    setRound((curr) => (curr = 0));
+    resetCtDown();
+  }
+
   function saveWinner() {
-    //TODO: saveWinner
-    // ValidationError: Games validation failed:
-    // result: Path `result` is required., winner: Path `winner` is required., player1: Path `player1` is required., player2: Path `player2` is
-    //required., turns: Path `turns` is required.
     const sendHighscore = async (e) => {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/game/save`,
-          JSON.stringify(winner)
+          winner
         );
         if (response.status === 201) {
           //alles ok!
@@ -91,6 +95,7 @@ function GameScreen({ pokemonA, pokemonB }) {
     console.log(winner.current);
     handleClose();
     sendHighscore();
+    setRound((curr) => (curr = 0));
     nav("/select");
   }
 
@@ -134,7 +139,6 @@ function GameScreen({ pokemonA, pokemonB }) {
         };
         handleShow();
         stopfight();
-        //saveWinner();
         return setInFight(false);
       }
       if (!cpu) {
@@ -149,7 +153,6 @@ function GameScreen({ pokemonA, pokemonB }) {
         };
         handleShow();
         stopfight();
-        //saveWinner();
         return setInFight(false);
       }
     }
@@ -241,7 +244,9 @@ function GameScreen({ pokemonA, pokemonB }) {
         <Modal.Body>
           <h3>{ctDown}</h3>
         </Modal.Body>
-        <Modal.Footer></Modal.Footer>
+        <Modal.Footer>
+          <h2>{pokeIni.current === "A" ? "Player starts" : "CPU starts"}</h2>
+        </Modal.Footer>
       </Modal>
     </>
   );
