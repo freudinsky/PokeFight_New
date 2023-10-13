@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { Button, ProgressBar, Modal } from "react-bootstrap";
+import axios from "axios";
 import PokeLogo from "./PokeLogo.jsx";
 import "./GameScreen.css";
 
@@ -71,14 +72,25 @@ function GameScreen({ pokemonA, pokemonB }) {
   }
   function saveWinner() {
     //TODO: saveWinner
-    // axios
-    //   .post(`${import.meta.env.VITE_API_URL}/game/save`, winnerData)
-    //   .then((res) => {
-    //     // setGames(res.data);
-    //     //show winnerscreen (Link to select and leaderboard)
-    //   })
-    //   .catch((err) => console.log(err));
+    // ValidationError: Games validation failed:
+    // result: Path `result` is required., winner: Path `winner` is required., player1: Path `player1` is required., player2: Path `player2` is
+    //required., turns: Path `turns` is required.
+    const sendHighscore = async (e) => {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_API_URL}/game/save`,
+          JSON.stringify(winner)
+        );
+        if (response.status === 201) {
+          //alles ok!
+        }
+      } catch (error) {
+        console.log("Error while saving! ", error);
+      }
+    };
+    console.log(winner.current);
     handleClose();
+    sendHighscore();
     nav("/select");
   }
 
