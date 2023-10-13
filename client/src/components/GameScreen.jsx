@@ -15,7 +15,9 @@ function GameScreen({ pokemonA, pokemonB }) {
     setInFight((curr) => (curr = true));
   };
   const handleShowCountdown = () => setShowCountdown(true);
-  const [round, setRound] = useState(0);
+  const [round, setRound] = useState(1);
+  const handleNextRound = () => setRound(round + 1);
+  const resetRound = () => setRound(1);
   const [cpuQueue, setCpuQueue] = useState([]);
   const [inFight, setInFight] = useState(false);
   const [pokeAhp, setPokeAhp] = useState(0);
@@ -51,6 +53,7 @@ function GameScreen({ pokemonA, pokemonB }) {
 
   function stopfight() {
     pokeIni.current = "";
+    resetRound();
     setInFight((curr) => (curr = !curr));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
@@ -58,7 +61,7 @@ function GameScreen({ pokemonA, pokemonB }) {
 
   function resetFight() {
     winner.current = "";
-    setRound((curr) => (curr = 0));
+    setRound((curr) => (curr = 1));
     setInFight((curr) => (curr = false));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
@@ -70,14 +73,14 @@ function GameScreen({ pokemonA, pokemonB }) {
       if (cpuQueue.length === 0) {
         const attack = setTimeout(() => {
           handleAction("attack", true);
-        }, 2000);
+        }, 2500);
         return () => {
           clearTimeout(attack);
         };
       } else {
         const attack = setTimeout(() => {
           handleAction("attack", true);
-        }, 2000);
+        }, 2500);
         return () => {
           clearTimeout(attack);
         };
@@ -101,11 +104,10 @@ function GameScreen({ pokemonA, pokemonB }) {
     handleClose();
     sendHighscore();
     resetFight();
-    //nav("/select");
+    nav("/select");
   }
 
   function handleAction(action, cpu = false) {
-    setRound((curr) => (curr = curr + 1));
     let att, satt, def, sdef, hp;
     if (cpu) {
       att = pokemonB.base.attack;
@@ -131,6 +133,7 @@ function GameScreen({ pokemonA, pokemonB }) {
       relDamage = att - def;
     }
     // relDamage = Math.abs(relDamage); // bugfix for now
+    handleNextRound();
     if (hp - relDamage <= 0) {
       if (cpu) {
         setPokeAhp((curr) => (curr = 0));
@@ -292,7 +295,7 @@ function GameScreen({ pokemonA, pokemonB }) {
               <img
                 src={pokemonA.picture}
                 className={
-                  pokeIni.current === "A" ? "pokeA ok" : "pokeA disabled"
+                  pokeIni.current === "A" ? "pokeA ok" : "pokeA fadein disabled"
                 }
               />
               {inFight && (
