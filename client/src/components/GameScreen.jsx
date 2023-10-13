@@ -12,11 +12,9 @@ function GameScreen({ pokemonA, pokemonB }) {
   const [showCountdown, setShowCountdown] = useState(false);
   const handleCloseCountdown = () => {
     setShowCountdown(false);
-    setInFight((curr) => (curr = !curr));
+    setInFight((curr) => (curr = true));
   };
   const handleShowCountdown = () => setShowCountdown(true);
-  const [ctDown, setCtDown] = useState(3);
-  const resetCtDown = () => setCtDown(3);
   const [round, setRound] = useState(0);
   const [cpuQueue, setCpuQueue] = useState([]);
   const [inFight, setInFight] = useState(false);
@@ -35,6 +33,10 @@ function GameScreen({ pokemonA, pokemonB }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (pokeIni.current === "B") calculateRound();
+  }, [inFight]);
+
   function setupGame() {
     if (!inFight) {
       if (
@@ -47,35 +49,40 @@ function GameScreen({ pokemonA, pokemonB }) {
     } else calculateRound();
   }
 
-  function calculateRound() {
-    if (pokeIni.current === "B") {
-      if (cpuQueue.length === 0) {
-        setTimeout(() => {
-          handleAction("attack", true);
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          handleAction("attack", true);
-        }, 2000);
-      }
-    }
-    setRound((curr) => (curr += 1));
-  }
-
   function stopfight() {
     setInFight((curr) => (curr = !curr));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
-    resetCtDown();
   }
 
   function resetFight() {
-    //winner.current = "";
+    winner.current = "";
     setRound((curr) => (curr = 0));
     setInFight((curr) => (curr = false));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
     resetCtDown();
+  }
+
+  function calculateRound() {
+    if (pokeIni.current === "B") {
+      if (cpuQueue.length === 0) {
+        const attack = setTimeout(() => {
+          handleAction("attack", true);
+        }, 2000);
+        return () => {
+          clearTimeout(attack);
+        };
+      } else {
+        const attack = setTimeout(() => {
+          handleAction("attack", true);
+        }, 2000);
+        return () => {
+          clearTimeout(attack);
+        };
+      }
+    }
+    setRound((curr) => (curr += 1));
   }
 
   function saveWinner() {
@@ -210,21 +217,6 @@ function GameScreen({ pokemonA, pokemonB }) {
     </>
   );
 
-  useEffect(() => {
-    const timeout1 = setTimeout(() => {
-      //just wait, ok?
-    }, 1000);
-    ctDown > 0 && setTimeout(() => setCtDown((curr) => (curr -= 1)), 1000);
-    const timeout2 = setTimeout(() => {
-      //just wait, ok?
-    }, 500);
-    if (ctDown === 0) {
-      handleCloseCountdown();
-      clearTimeout(timeout1);
-      return () => clearTimeout(timeout2);
-    }
-  }, [ctDown]);
-
   const countdownModal = (
     <>
       <Modal
@@ -236,14 +228,16 @@ function GameScreen({ pokemonA, pokemonB }) {
       >
         <Modal.Header>
           <Modal.Title>
-            <h2>The fight starts in</h2>
+            <h2>The fight can begin!</h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3>{ctDown}</h3>
-        </Modal.Body>
-        <Modal.Footer>
           <h2>{pokeIni.current === "A" ? "Player starts" : "CPU starts"}</h2>
+        </Modal.Body>
+        <Modal.Footer className="d-flex">
+          <Button variant="warning" onClick={handleCloseCountdown}>
+            Lets begin!
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
@@ -278,6 +272,9 @@ function GameScreen({ pokemonA, pokemonB }) {
                   disabled={!inFight}
                 >
                   Special Attack
+                </button>
+                <button id="stopfight" onClick={stopfight}>
+                  Give Up!
                 </button>
               </div>
             )}
@@ -367,9 +364,6 @@ function GameScreen({ pokemonA, pokemonB }) {
             {inFight ? (
               <>
                 <div id="rounds">Round {round}</div>
-                <button id="stopfight" onClick={stopfight}>
-                  Give Up!
-                </button>
               </>
             ) : (
               <button id="fight" onClick={setupGame}>
