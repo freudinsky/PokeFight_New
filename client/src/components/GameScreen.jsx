@@ -12,12 +12,9 @@ function GameScreen({ pokemonA, pokemonB }) {
   const [showCountdown, setShowCountdown] = useState(false);
   const handleCloseCountdown = () => {
     setShowCountdown(false);
-    setInFight((curr) => (curr = !curr));
-    calculateRound();
+    setInFight((curr) => (curr = true));
   };
   const handleShowCountdown = () => setShowCountdown(true);
-  const [ctDown, setCtDown] = useState(3);
-  const resetCtDown = () => setCtDown(3);
   const [round, setRound] = useState(0);
   const [cpuQueue, setCpuQueue] = useState([]);
   const [inFight, setInFight] = useState(false);
@@ -36,6 +33,10 @@ function GameScreen({ pokemonA, pokemonB }) {
     }
   }, []);
 
+  useEffect(() => {
+    if (pokeIni.current === "B") calculateRound();
+  }, [inFight]);
+
   function setupGame() {
     if (!inFight) {
       if (
@@ -48,59 +49,63 @@ function GameScreen({ pokemonA, pokemonB }) {
     } else calculateRound();
   }
 
-  function calculateRound() {
-    if (pokeIni.current === "B") {
-      if (cpuQueue.length === 0) {
-        setTimeout(() => {
-          handleAction("attack", true);
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          handleAction("attack", true);
-        }, 2000);
-      }
-    }
-    setRound((curr) => (curr += 1));
-  }
-
   function stopfight() {
+    pokeIni.current = "";
     setInFight((curr) => (curr = !curr));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
-    resetCtDown();
   }
 
   function resetFight() {
+    winner.current = "";
+    setRound((curr) => (curr = 0));
     setInFight((curr) => (curr = false));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
-    setRound((curr) => (curr = 0));
     resetCtDown();
   }
 
+  function calculateRound() {
+    if (pokeIni.current === "B") {
+      if (cpuQueue.length === 0) {
+        const attack = setTimeout(() => {
+          handleAction("attack", true);
+        }, 2000);
+        return () => {
+          clearTimeout(attack);
+        };
+      } else {
+        const attack = setTimeout(() => {
+          handleAction("attack", true);
+        }, 2000);
+        return () => {
+          clearTimeout(attack);
+        };
+      }
+    }
+  }
+
   function saveWinner() {
-    const sendHighscore = async (e) => {
+    const sendHighscore = async () => {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/game/save`,
-          winner
+          winner.current
         );
         if (response.status === 201) {
-          //alles ok!
         }
       } catch (error) {
         console.log("Error while saving! ", error);
       }
     };
-    console.log(winner.current);
     handleClose();
     sendHighscore();
-    setRound((curr) => (curr = 0));
-    nav("/select");
+    resetFight();
+    //nav("/select");
   }
 
   function handleAction(action, cpu = false) {
-    //TODO: order of checks: check first what kind of attack
+    setRound((curr) => (curr = curr + 1));
     let att, satt, def, sdef, hp;
     if (cpu) {
       att = pokemonB.base.attack;
@@ -117,7 +122,7 @@ function GameScreen({ pokemonA, pokemonB }) {
       hp = pokeBhp;
     }
     //TODO: refactor damage calculation
-    // def > att results in minus damage, modify based on speed?
+    // check matchup
     let relDamage = att;
     let factor = att / def;
     if (factor < 1) {
@@ -212,21 +217,6 @@ function GameScreen({ pokemonA, pokemonB }) {
     </>
   );
 
-  useEffect(() => {
-    const timeout1 = setTimeout(() => {
-      //just wait, ok?
-    }, 1000);
-    ctDown > 0 && setTimeout(() => setCtDown((curr) => (curr -= 1)), 1000);
-    const timeout2 = setTimeout(() => {
-      //just wait, ok?
-    }, 500);
-    if (ctDown === 0) {
-      handleCloseCountdown();
-      clearTimeout(timeout1);
-      return () => clearTimeout(timeout2);
-    }
-  }, [ctDown]);
-
   const countdownModal = (
     <>
       <Modal
@@ -238,14 +228,16 @@ function GameScreen({ pokemonA, pokemonB }) {
       >
         <Modal.Header>
           <Modal.Title>
-            <h2>The fight starts in</h2>
+            <h2>The fight can begin!</h2>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h3>{ctDown}</h3>
-        </Modal.Body>
-        <Modal.Footer>
           <h2>{pokeIni.current === "A" ? "Player starts" : "CPU starts"}</h2>
+        </Modal.Body>
+        <Modal.Footer className="d-flex">
+          <Button variant="warning" onClick={handleCloseCountdown}>
+            Lets begin!
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
@@ -281,21 +273,27 @@ function GameScreen({ pokemonA, pokemonB }) {
                 >
                   Special Attack
                 </button>
+                <button id="stopfight" onClick={stopfight}>
+                  Give Up!
+                </button>
               </div>
             )}
             <div className="poke" id="pokeA">
               <div className={inFight ? "stats" : "stats hide"}>
                 <ProgressBar
-                  variant="success"
+                  animated
+                  variant="warning"
                   now={pokeAhp}
                   max={pokemonA.base.hp}
-                  label={`${pokeAhp}`}
+                  label={`${pokeAhp} HP`}
                   className="hpbar"
                 />
               </div>
               <img
                 src={pokemonA.picture}
-                className={pokeIni.current === "A" ? "pokeA" : "pokeA disabled"}
+                className={
+                  pokeIni.current === "A" ? "pokeA ok" : "pokeA disabled"
+                }
               />
               {inFight && (
                 <div className="stats">
@@ -325,17 +323,18 @@ function GameScreen({ pokemonA, pokemonB }) {
             <div className="poke" id="pokeB">
               <div className={inFight && inFight ? "stats" : "stats hide"}>
                 <ProgressBar
-                  variant="success"
+                  animated
+                  variant="warning"
                   now={pokeBhp}
                   max={pokemonB.base.hp}
-                  label={`${pokeBhp}`}
+                  label={`${pokeBhp} HP`}
                   className="hpbar"
                 />
               </div>
               <img
                 src={pokemonB.picture}
                 className={
-                  pokeIni.current === "B" ? "pokeB " : "pokeB disabled"
+                  pokeIni.current === "B" ? "pokeB ok" : "pokeB disabled"
                 }
               />
               {inFight && (
@@ -369,9 +368,6 @@ function GameScreen({ pokemonA, pokemonB }) {
             {inFight ? (
               <>
                 <div id="rounds">Round {round}</div>
-                <button id="stopfight" onClick={stopfight}>
-                  Give Up!
-                </button>
               </>
             ) : (
               <button id="fight" onClick={setupGame}>

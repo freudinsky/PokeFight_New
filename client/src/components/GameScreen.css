@@ -1,12 +1,3 @@
-.hide {
-  visibility: hidden;
-}
-.disabled {
-  filter: grayscale(100%) opacity(0.5) drop-shadow(2px 4px 6px black);
-}
-img {
-  filter: drop-shadow(2px 4px 6px black);
-}
 .GameContainerWrapper {
   height: 100vh;
   width: 100vw;
@@ -19,7 +10,6 @@ img {
   grid-template-rows: 45px 190px 50px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
-
 .GameContainer .pokeA.name,
 .pokeB.name {
   color: white;
@@ -54,16 +44,22 @@ img {
   padding: 0;
   margin: 0;
   width: 320px;
+  animation: fadein 1s;
 }
 .GameContainer > .actions {
   grid-row-start: 3;
   grid-column-start: 3;
+  grid-gap: 10px;
   display: flex;
   justify-content: space-evenly;
+  flex-direction: column;
+  animation: fadein 1s;
 }
 .GameContainer .hpbar {
-  height: 30px;
+  color: black !important;
+  height: 35px;
   font-size: 20px;
+  font-weight: bold;
 }
 .GameContainer > .actions button {
   color: white;
@@ -76,6 +72,13 @@ img {
 }
 .GameContainer > .actions #sattack {
   background-color: rgb(156, 37, 235);
+}
+.GameContainer > .actions #stopfight {
+  margin-top: 5px;
+  color: white;
+  background-color: rgb(222, 59, 255);
+  grid-column-start: 3;
+  grid-row-start: 4;
 }
 .GameContainer > .poke > .actions > .singlestat {
   color: white;
@@ -151,9 +154,6 @@ img {
   grid-column-start: 2;
   grid-row-start: 2;
 }
-.GameContainer > #pokeA img {
-  transform: scaleX(-1);
-}
 .GameContainer > #pokeB {
   grid-column-start: 4;
   grid-row-start: 2;
@@ -165,20 +165,16 @@ img {
   grid-column-start: 3;
   grid-row-start: 3;
 }
-.GameContainer > #stopfight {
-  margin-top: 5px;
-  color: white;
-  background-color: rgb(222, 59, 255);
-  grid-column-start: 3;
-  grid-row-start: 4;
-}
 .winnerModal .modal-content .modal-header {
   color: white;
-  background-color: rgb(206, 177, 14);
+  background-color: rgb(159, 27, 211);
+  justify-content: center;
 }
 .winnerModal .modal-content .modal-body {
   color: white;
   background-color: rgb(236, 73, 23);
+  text-align: center;
+  font-size: 1.5em;
 }
 .winnerModal .modal-content .modal-footer {
   color: white;
@@ -225,6 +221,52 @@ img {
     background-color: rgba(0, 0, 0, 0.1);
   }
 }
-img.pokeA.ini {
-  animation: pulse 1s infinite ease-in-out;
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes wobble {
+  0% {
+    transform: translateX(0%);
+  }
+  15% {
+    transform: translateX(-25%) rotate(-5deg);
+  }
+  30% {
+    transform: translateX(20%) rotate(3deg);
+  }
+  45% {
+    transform: translateX(-15%) rotate(-3deg);
+  }
+  60% {
+    transform: translateX(10%) rotate(2deg);
+  }
+  75% {
+    transform: translateX(-5%) rotate(-1deg);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+.hide {
+  visibility: hidden;
+}
+.disabled {
+  filter: grayscale(100%) opacity(0.5) drop-shadow(2px 4px 6px black);
+}
+.warning {
+  animation: pulseWarning 1s infinite ease-in-out;
+}
+.ok {
+  animation: pulseOk 1s infinite ease-in-out;
+}
+.wobble {
+  animation: wobble 0.5s infinite linear;
+}
+img {
+  filter: drop-shadow(2px 4px 6px black);
 }
