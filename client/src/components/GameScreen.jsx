@@ -50,6 +50,7 @@ function GameScreen({ pokemonA, pokemonB }) {
   }
 
   function stopfight() {
+    pokeIni.current = "";
     setInFight((curr) => (curr = !curr));
     setPokeAhp((curr) => (curr = pokemonA.base.hp));
     setPokeBhp((curr) => (curr = pokemonB.base.hp));
@@ -82,7 +83,6 @@ function GameScreen({ pokemonA, pokemonB }) {
         };
       }
     }
-    setRound((curr) => (curr += 1));
   }
 
   function saveWinner() {
@@ -105,7 +105,7 @@ function GameScreen({ pokemonA, pokemonB }) {
   }
 
   function handleAction(action, cpu = false) {
-    //TODO: order of checks: check first what kind of attack
+    setRound((curr) => (curr = curr + 1));
     let att, satt, def, sdef, hp;
     if (cpu) {
       att = pokemonB.base.attack;
@@ -281,16 +281,19 @@ function GameScreen({ pokemonA, pokemonB }) {
             <div className="poke" id="pokeA">
               <div className={inFight ? "stats" : "stats hide"}>
                 <ProgressBar
-                  variant="success"
+                  animated
+                  variant="warning"
                   now={pokeAhp}
                   max={pokemonA.base.hp}
-                  label={`${pokeAhp}`}
+                  label={`${pokeAhp} HP`}
                   className="hpbar"
                 />
               </div>
               <img
                 src={pokemonA.picture}
-                className={pokeIni.current === "A" ? "pokeA" : "pokeA disabled"}
+                className={
+                  pokeIni.current === "A" ? "pokeA ok" : "pokeA disabled"
+                }
               />
               {inFight && (
                 <div className="stats">
@@ -320,17 +323,18 @@ function GameScreen({ pokemonA, pokemonB }) {
             <div className="poke" id="pokeB">
               <div className={inFight && inFight ? "stats" : "stats hide"}>
                 <ProgressBar
-                  variant="success"
+                  animated
+                  variant="warning"
                   now={pokeBhp}
                   max={pokemonB.base.hp}
-                  label={`${pokeBhp}`}
+                  label={`${pokeBhp} HP`}
                   className="hpbar"
                 />
               </div>
               <img
                 src={pokemonB.picture}
                 className={
-                  pokeIni.current === "B" ? "pokeB " : "pokeB disabled"
+                  pokeIni.current === "B" ? "pokeB ok" : "pokeB disabled"
                 }
               />
               {inFight && (
