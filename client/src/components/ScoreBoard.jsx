@@ -11,8 +11,15 @@ function ScoreBoard() {
     axios
       .get(`${import.meta.env.VITE_API_URL}/game/leaderboard`)
       .then((res) => {
-        setGames(res.data);
-        console.log(res.data);
+        const sortedGames = res.data.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+
+          return dateB - dateA;
+        });
+
+        setGames(sortedGames);
+        console.log(sortedGames);
       })
       .catch((err) => console.log(err));
   }, []);
