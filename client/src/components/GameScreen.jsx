@@ -131,6 +131,7 @@ function GameScreen({ pokemonA, pokemonB }) {
       relDamage = Math.floor(att * factor);
     } else {
       relDamage = att - def;
+      if (relDamage === 0) relDamage + 5;
     }
     // relDamage = Math.abs(relDamage); // bugfix for now
     handleNextRound();
